@@ -1,1 +1,18 @@
-/.lake
+/*
+
+# whitelist
+!/PoincareHighDim/
+!/.github
+!/Examples/
+!/PoincareHighDim.lean
+!/lakefile.toml
+!/lean-toolchain
+!/README.md
+!/LICENSE
+!/.gitignore
+# end of whitelist
+
+.lake/
+
+.DS_Store
+**/.DS_Store
