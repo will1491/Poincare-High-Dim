@@ -1,18 +1,23 @@
+# Ignore everything that is not part of the lean-eval submission workspace.
 /*
 
-# whitelist
-!/PoincareHighDim/
-!/.github
-!/Examples/
-!/PoincareHighDim.lean
+# whitelist: trusted benchmark files, the solver-owned submission, and repository metadata
+!/.gitignore
+!/.github/
+!/Challenge.lean
+!/Solution.lean
+!/Submission.lean
+!/Submission/
+!/WorkspaceTest.lean
+!/config.json
+!/holes.json
 !/lakefile.toml
+!/lake-manifest.json
 !/lean-toolchain
 !/README.md
-!/LICENSE
-!/.gitignore
-# end of whitelist
+!/PROBLEM.md
 
+# build artifacts and OS files anywhere
 .lake/
-
 .DS_Store
 **/.DS_Store
