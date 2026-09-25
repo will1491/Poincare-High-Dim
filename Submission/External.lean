@@ -1,5 +1,7 @@
 import Mathlib.Geometry.Manifold.Instances.Sphere
 import Mathlib.Topology.Homotopy.Equiv
+import Submission.Homology.Noncompact
+import Submission.Homology.CompactZero
 
 /-!
 # External theorems
@@ -9,9 +11,12 @@ literature citation so that `#print axioms` on the final theorem exhibits exactl
 mathematical debts remain.
 
 * `compactSpace_of_homotopyEquiv_sphere`: a topological `n`-manifold homotopy equivalent to `Sⁿ`
-  is compact.  Proof: `H_n(M; ℤ) ≅ H_n(Sⁿ; ℤ) ≅ ℤ` by homotopy invariance, while a connected
-  noncompact `n`-manifold has `H_n = 0` (Hatcher, Proposition 3.29).  Needed only because the
-  target statement does not assume compactness.
+  is compact.  **Now proved** (no longer external): for `n = 0` the manifold is discrete and
+  `M` injects into `S⁰` (`Submission.Homology.CompactZero`); for `n ≥ 1`,
+  `H_n(M; ℤ) ≅ H_n(Sⁿ; ℤ) ≅ ℤ ≠ 0` by homotopy invariance and the sphere computation, while a
+  connected noncompact `n`-manifold has `H_n = 0` (Hatcher, Proposition 3.29, formalised in
+  `Submission.Homology.Noncompact`).  Needed only because the target statement does not assume
+  compactness.
 * `exists_smooth_structure_of_homotopyEquiv_sphere`: a topological homotopy `n`-sphere, `n ≥ 5`,
   admits a smooth structure.  WARNING: the known proof goes through the Kirby–Siebenmann
   obstruction (`ks(M) ∈ H⁴(M; ℤ/2) = 0`, so `M` is PL) and the PL Poincaré conjecture
@@ -30,11 +35,18 @@ open scoped Manifold ContDiff ContinuousMap
 open Metric
 
 /-- A topological manifold homotopy equivalent to a sphere is compact (Hatcher, Prop. 3.29 and
-homotopy invariance of `H_n`). External. -/
+homotopy invariance of `H_n`).  Proved: the case `n = 0` is
+`SingularPair.compactSpace_of_homotopyEquiv_sphere_zero` (a `0`-manifold is discrete, and a
+homotopy equivalence out of a discrete space is injective, so `M` is finite); the case `n ≥ 1` is
+`SingularPair.compactSpace_of_homotopyEquiv_sphere_of_one_le` (`M` is path-connected since `Sⁿ`
+is, and a noncompact connected `n`-manifold has `H_n(M; ℤ) = 0`, contradicting
+`H_n(M; ℤ) ≅ H_n(Sⁿ; ℤ) ≅ ℤ`). -/
 theorem compactSpace_of_homotopyEquiv_sphere {n : ℕ} {M : Type*} [TopologicalSpace M]
     [T2Space M] [ChartedSpace (EuclideanSpace ℝ (Fin n)) M]
     (e : M ≃ₕ sphere (0 : EuclideanSpace ℝ (Fin (n + 1))) 1) : CompactSpace M := by
-  sorry
+  rcases Nat.eq_zero_or_pos n with rfl | hn
+  · exact SingularPair.compactSpace_of_homotopyEquiv_sphere_zero e
+  · exact SingularPair.compactSpace_of_homotopyEquiv_sphere_of_one_le hn e
 
 /-- A topological homotopy `n`-sphere, `n ≥ 5`, admits a smooth structure (Kirby–Siebenmann
 plus the PL Poincaré conjecture, or Newman's engulfing theorem). External. -/

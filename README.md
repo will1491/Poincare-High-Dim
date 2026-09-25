@@ -48,26 +48,32 @@ no external Lake dependencies, so the whole development lives there:
 | `Morse/Defs.lean` | critical points, Hessian, Morse index, `MorseStrip`, `ModifiedWithin`, `IsSelfIndexing`, `IsHomotopyEquivInclusion` | Milnor §2 |
 | `Morse/Existence.lean`, `Morse/ExistenceProof.lean` | existence of Morse functions on a strip (proved: Sard plus `C²`-stability) | Milnor Thm 2.5 |
 | `Morse/RegularInterval.lean` | no critical points ⇒ product (proved from the vendored flow theory) | Milnor Thm 3.4 |
-| `Morse/SelfIndexing.lean` | self-indexing Morse functions | Milnor Thm 4.8 |
-| `Morse/LowHandles.lean` | elimination of index `0, n` and of index `1, n-1` | Milnor Thm 8.1 |
+| `Morse/SelfIndexing.lean` with `Morse/{CriticalFinite, MonotoneShift, DistinctValues, ModelField, GradientLike, StripFlow, TrajectoryCutoff, Rearrange, Transversality, Swap}.lean` | self-indexing Morse functions (proved: gradient-like fields with model form in Morse charts, their global flows, distinct critical values, the rearrangement function of Milnor 4.1, general position of the spheres by a level-tangent twist and a Hausdorff-dimension Sard argument, and a bubble sort on inversions) | Milnor Thms 2.8, 3.2, 4.1, 4.4, 4.8 |
+| `Morse/LowHandles.lean` with `Morse/{NegDual, DistinctSelfIndexing, Terminal, StripConnected, EqualIndexPosition, Bridge, Isolate, Substrip, CancelPair}.lean` | elimination of index `0, n` (proved: Milnor's connectivity argument in flow form, general position between index-1 points, isolation of the cancelling pair in a substrip, then the First Cancellation Theorem for an index-`0`/index-`1` pair); elimination of index `1, n-1` (open) | Milnor Thms 5.4, 8.1 |
+| `Morse/{CancelSetup, CancelModel, CancelTransverse, CancelField, CancelFlow, CancelFlowTools, CancelGood, CancelFlowP, CancelFlowQ, CancelFlowQ2, CancelFlowExit, CancelGoodExists, CancelFlowBack, CancelFunction, CancelIndexZero}.lean` | the First Cancellation Theorem for an index-`0`/index-`1` pair (proved, ~15,000 lines): the connecting arc and its transverse coordinate, a nowhere-zero alteration `V'` of the gradient-like field along the arc (pushers at `p` and `q`, reversal with a transverse contraction on a one-sided tube), the crossing property of its flow (every trajectory reaches the bottom level forward and the top level backward, by a transported-angle Lyapunov function and the LaSalle principle), and the new Morse function without critical points built from the crossing times | Milnor Thm 5.4, Lemmas 5.5–5.6 |
 | `Morse/MiddleHandles.lean` | middle-dimensional cancellation (handle complex, Whitney trick) | Milnor Thm 7.8 |
 | `HCobordism.lean` | the h-cobordism theorem, assembled from the above | Milnor Thm 9.1 |
 | `ModelTransport.lean` | passing from Mathlib's model `𝓡 n` to the model `Fin n → ℝ` | — |
 | `Topology/Disk.lean`, `Topology/AlexanderTrick.lean`, `Topology/TwistedSphere.lean` | the Alexander trick; two disks glued along their boundary form a sphere | Milnor Prop. B, Scorpan p. 31 |
 | `Topology/SphereSimplyConnected.lean` | `Sᵏ` is simply connected for `k ≥ 2` (not in Mathlib) | Hatcher Prop. 1.14 |
 | `ChartDisks.lean` | two disjoint chart disks and the smooth function cutting them out | Scorpan p. 30 |
-| `HomotopySphere.lean` | point-set transport along homotopy equivalences; the strip between the disks is an h-cobordism (external) | Hatcher §3.3 |
-| `External.lean` | compactness of homotopy spheres; smoothability (Kirby–Siebenmann); the case `n = 5` (Kervaire–Milnor) | — |
+| `HomotopySphere.lean`, `Topology/GeneralPosition.lean`, `Topology/PushOff.lean` | the h-cobordism input (all proved): the complement `W` of two chart disks in a homotopy `n`-sphere (`n ≥ 3`) is simply connected (general position via Hausdorff dimension) and `H_*(W, ∂₀W; ℤ) = 0` | Hatcher 1.14, §3.3 |
+| `External.lean` | compactness of homotopy spheres (proved: `H_n` of a noncompact manifold vanishes); smoothability (Kirby–Siebenmann, external); the case `n = 5` (Kervaire–Milnor, external) | Hatcher 3.29 |
 | `Smooth.lean` | Smale's theorem for smooth homotopy spheres, `n ≥ 6` and `n ≥ 5` | Milnor Prop. B |
+| `Homology/*.lean` | singular homology of pairs: long exact sequence, naturality, reduced `H₀`, barycentric subdivision and small simplices (Hatcher 2.21), Mayer–Vietoris (absolute and relative), excision, `H_k(Sⁿ)`, compact supports, local homology of manifolds (Hatcher 3.27(a)), injectivity and surjectivity of `H_n(M) → H_n(M, M∖x)` for closed connected manifolds via ℤ/d coefficients and a Bockstein sequence, `H_n = 0` for noncompact manifolds (Hatcher 3.29) — all proved | Hatcher §2.1–2.2, §3.3 |
 
 Every remaining `sorry` is a named theorem with a docstring citing the mathematical source;
-there are eight of them (`grep -rn sorry Submission`): the four Morse-theoretic nodes
-(`exists_selfIndexing`, `exists_no_extremal_index`, `exists_index_in_middle`,
-`product_of_middle_indices`), the algebraic-topological input `hcobordism_input_of_homotopy_sphere`,
-and the three external theorems in `External.lean`.  Everything else, including the existence of
-Morse functions, the regular interval theorem, the assembly of the h-cobordism theorem from its
-nodes, the Alexander trick, the twisted-sphere theorem, the chart-disk construction,
-`π₁(Sᵏ) = 0`, and the derivation of the target from the smooth theorem, is proved.
+there are four of them (`grep -rn sorry Submission`): the index-`1, n-1` elimination
+`exists_index_in_middle` (Milnor 8.1, which also needs isotopies of circles), the
+middle-dimensional cancellation `product_of_middle_indices` (handle complex and Whitney trick,
+on top of the general-index First Cancellation Theorem), and the two external theorems in
+`External.lean` (smoothability of topological homotopy spheres, and the smooth case `n = 5`).
+Everything else, including the existence of Morse functions, self-indexing, the regular
+interval theorem, the elimination of the extremal indices `0` and `n` (with the First
+Cancellation Theorem for an index-`0`/index-`1` pair), the assembly of the h-cobordism theorem
+from its nodes, the Alexander trick, the twisted-sphere theorem, the chart-disk construction,
+`π₁(Sᵏ) = 0`, the whole h-cobordism input, the compactness of homotopy spheres, and the
+derivation of the target from the smooth theorem, is proved.
 
 ## Build and check
 

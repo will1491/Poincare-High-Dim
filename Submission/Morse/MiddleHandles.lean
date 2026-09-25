@@ -1,13 +1,16 @@
 import Submission.Morse.Defs
 import Submission.Morse.RegularInterval
+import Submission.Homology.PairVanishing
 
 /-!
 # Cancellation of critical points in the middle dimensions
 
-Milnor, *Lectures on the h-cobordism theorem*, Theorem 7.8: a strip of dimension `n ≥ 6` whose
-Morse function has all critical points of index in `[2, n - 2]`, whose strip and ends are simply
-connected, and whose lower end is included by a homotopy equivalence (equivalently
-`H_*(W, V₀; ℤ) = 0`), is a product cobordism.
+Milnor, *Lectures on the h-cobordism theorem*, Theorem 7.8: a strip `W` of dimension `n ≥ 6`
+whose Morse function has all critical points of index in `[2, n - 2]`, whose strip and ends
+`V₀`, `V₁` are simply connected, and with `H_*(W, V₀; ℤ) = 0` (`RelHomologyVanishes`, the
+relative singular homology of `Submission.Homology.SingularPair`), is a product cobordism.
+This is Milnor's hypothesis verbatim; the homotopy-theoretic form (the inclusion `V₀ ↪ W` is a
+homotopy equivalence) implies it by `IsHomotopyEquivInclusion.relHomologyVanishes`.
 
 This single node hides the deepest parts of the theory: the handle chain complex and the fact
 that it computes `H_*(W, V₀)` (Theorem 7.4, which needs singular homology of pairs with
@@ -24,8 +27,9 @@ open Set
 variable {n : ℕ} {H : Type*} [TopologicalSpace H] {M : Type*} [TopologicalSpace M]
   [ChartedSpace H M]
 
-/-- **Middle-dimensional cancellation** (Milnor, Theorem 7.8, strip form, homotopy-theoretic
-hypotheses). -/
+/-- **Middle-dimensional cancellation** (Milnor, Theorem 7.8, strip form): `W = f ⁻¹' [a, b]`
+of dimension `n ≥ 6`, all critical points of index in `[2, n - 2]`, `W`, `V₀ = f ⁻¹' {a}` and
+`V₁ = f ⁻¹' {b}` simply connected, and `H_*(W, V₀; ℤ) = 0`. -/
 theorem product_of_middle_indices (I : ModelWithCorners ℝ (Fin n → ℝ) H) [I.Boundaryless]
     [IsManifold I ∞ M] [T2Space M] [SigmaCompactSpace M] (h6 : 6 ≤ n)
     {f : M → ℝ} {a b : ℝ} (hf : MorseStrip I f a b)
@@ -33,7 +37,7 @@ theorem product_of_middle_indices (I : ModelWithCorners ℝ (Fin n → ℝ) H) [
       2 ≤ morseIndex I f x ∧ morseIndex I f x + 2 ≤ n)
     (hW : SimplyConnectedSpace (f ⁻¹' Icc a b))
     (hV₀ : SimplyConnectedSpace (f ⁻¹' {a})) (hV₁ : SimplyConnectedSpace (f ⁻¹' {b}))
-    (he₀ : IsHomotopyEquivInclusion (f ⁻¹' {a}) (f ⁻¹' Icc a b)) :
+    (hH : RelHomologyVanishes (f ⁻¹' Icc a b) (Subtype.val ⁻¹' (f ⁻¹' {a}))) :
     ∃ Φ : M ≃ₘ⟮I, I⟯ M, Φ '' (f ⁻¹' Iic a) = f ⁻¹' Iic b ∧ Φ '' (f ⁻¹' {a}) = f ⁻¹' {b} := by
   sorry
 

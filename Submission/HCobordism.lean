@@ -7,10 +7,11 @@ import Submission.Morse.MiddleHandles
 # The h-cobordism theorem (strip form)
 
 Smale's h-cobordism theorem in the form of Milnor, *Lectures on the h-cobordism theorem*,
-Theorem 9.1, with the homological hypothesis `H_*(W, V₀; ℤ) = 0` replaced by the (stronger but
-equivalent under simple connectivity) hypothesis that the inclusion `V₀ ↪ W` is a homotopy
-equivalence: a simply connected strip of dimension `≥ 6` with simply connected ends, whose lower
-end is included by a homotopy equivalence, is a product cobordism.
+Theorem 9.1: a simply connected strip `W` of dimension `≥ 6` with simply connected ends `V₀`,
+`V₁` and `H_*(W, V₀; ℤ) = 0` (`RelHomologyVanishes`) is a product cobordism.  The corollary
+`hcobordism_strip_of_homotopyEquivInclusion` restates it with the stronger (equivalent under
+simple connectivity, by Whitehead's theorem) hypothesis that the inclusion `V₀ ↪ W` is a
+homotopy equivalence, via `IsHomotopyEquivInclusion.relHomologyVanishes`.
 
 The proof is the assembly of the Morse-theoretic nodes: produce a Morse function on the strip
 (`exists_morseStrip`), make it self-indexing (`exists_selfIndexing`), eliminate the critical
@@ -29,7 +30,9 @@ open Set
 variable {n : ℕ} {H : Type*} [TopologicalSpace H] {M : Type*} [TopologicalSpace M]
   [ChartedSpace H M]
 
-/-- **The h-cobordism theorem** (Smale; Milnor, Theorem 9.1) in strip form. -/
+/-- **The h-cobordism theorem** (Smale; Milnor, Theorem 9.1) in strip form: `W = f ⁻¹' [a, b]`
+of dimension `≥ 6`, `W`, `V₀ = f ⁻¹' {a}` and `V₁ = f ⁻¹' {b}` simply connected, and
+`H_*(W, V₀; ℤ) = 0`. -/
 theorem hcobordism_strip (I : ModelWithCorners ℝ (Fin n → ℝ) H) [I.Boundaryless]
     [IsManifold I ∞ M] [T2Space M] [SigmaCompactSpace M] (h6 : 6 ≤ n)
     (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) {a b : ℝ} (hab : a < b)
@@ -37,7 +40,7 @@ theorem hcobordism_strip (I : ModelWithCorners ℝ (Fin n → ℝ) H) [I.Boundar
     (hreg : ∀ x, f x = a ∨ f x = b → ¬ IsCriticalPt I f x)
     (hW : SimplyConnectedSpace (f ⁻¹' Icc a b))
     (hV₀ : SimplyConnectedSpace (f ⁻¹' {a})) (hV₁ : SimplyConnectedSpace (f ⁻¹' {b}))
-    (he₀ : IsHomotopyEquivInclusion (f ⁻¹' {a}) (f ⁻¹' Icc a b)) :
+    (hH : RelHomologyVanishes (f ⁻¹' Icc a b) (Subtype.val ⁻¹' (f ⁻¹' {a}))) :
     ∃ Φ : M ≃ₘ⟮I, I⟯ M, Φ '' (f ⁻¹' Iic a) = f ⁻¹' Iic b ∧ Φ '' (f ⁻¹' {a}) = f ⁻¹' {b} := by
   -- Step 1: a Morse function on the strip.
   obtain ⟨g₁, hg₁, hM₁⟩ := exists_morseStrip I f hf hab hcompact hreg
@@ -79,14 +82,28 @@ theorem hcobordism_strip (I : ModelWithCorners ℝ (Fin n → ℝ) H) [I.Boundar
   have hV₁₄ : SimplyConnectedSpace (g₄ ⁻¹' {b}) := by
     rw [hf₄.preimage_singleton_right]
     exact hV₁
-  have he₀₄ : IsHomotopyEquivInclusion (g₄ ⁻¹' {a}) (g₄ ⁻¹' Icc a b) := by
+  have hH₄ : RelHomologyVanishes (g₄ ⁻¹' Icc a b) (Subtype.val ⁻¹' (g₄ ⁻¹' {a})) := by
     rw [hf₄.preimage_singleton_left, hf₄.preimage_Icc]
-    exact he₀
+    exact hH
   obtain ⟨Φ, hΦ₁, hΦ₂⟩ :=
-    product_of_middle_indices I h6 hM₄ hidx₄ hW₄ hV₀₄ hV₁₄ he₀₄
+    product_of_middle_indices I h6 hM₄ hidx₄ hW₄ hV₀₄ hV₁₄ hH₄
   -- Step 6: transport the conclusion back to `f`.
   refine ⟨Φ, ?_, ?_⟩
   · rwa [hf₄.preimage_Iic_left, hf₄.preimage_Iic_right] at hΦ₁
   · rwa [hf₄.preimage_singleton_left, hf₄.preimage_singleton_right] at hΦ₂
+
+/-- **The h-cobordism theorem** with the homotopy-theoretic hypothesis that the inclusion of
+the lower end `V₀ ↪ W` is a homotopy equivalence (which implies `H_*(W, V₀; ℤ) = 0` by
+`IsHomotopyEquivInclusion.relHomologyVanishes`). -/
+theorem hcobordism_strip_of_homotopyEquivInclusion (I : ModelWithCorners ℝ (Fin n → ℝ) H)
+    [I.Boundaryless] [IsManifold I ∞ M] [T2Space M] [SigmaCompactSpace M] (h6 : 6 ≤ n)
+    (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) {a b : ℝ} (hab : a < b)
+    (hcompact : IsCompact (f ⁻¹' Icc a b))
+    (hreg : ∀ x, f x = a ∨ f x = b → ¬ IsCriticalPt I f x)
+    (hW : SimplyConnectedSpace (f ⁻¹' Icc a b))
+    (hV₀ : SimplyConnectedSpace (f ⁻¹' {a})) (hV₁ : SimplyConnectedSpace (f ⁻¹' {b}))
+    (he₀ : IsHomotopyEquivInclusion (f ⁻¹' {a}) (f ⁻¹' Icc a b)) :
+    ∃ Φ : M ≃ₘ⟮I, I⟯ M, Φ '' (f ⁻¹' Iic a) = f ⁻¹' Iic b ∧ Φ '' (f ⁻¹' {a}) = f ⁻¹' {b} :=
+  hcobordism_strip I h6 f hf hab hcompact hreg hW hV₀ hV₁ he₀.relHomologyVanishes
 
 end PoincareHighDim

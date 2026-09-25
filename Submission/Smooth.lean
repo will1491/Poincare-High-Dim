@@ -12,12 +12,13 @@ Smale's theorem (Milnor, *Lectures on the h-cobordism theorem*, Proposition B; S
 homotopy equivalent to `Sⁿ` is homeomorphic to `Sⁿ`.
 
 For `n ≥ 6` the proof is: cut out two disjoint chart disks (`exists_chartDisks_and_strip`);
-the strip between them is a simply connected h-cobordism between two spheres
-(`hcobordism_input_of_homotopy_sphere`, `simplyConnectedSpace_sphere`); by the h-cobordism
-theorem (`hcobordism_strip`) a diffeomorphism of `M` carries the first disk onto the complement
-of the second open disk, so `M` is the union of two closed disks glued along their boundaries
-(a twisted sphere); the Alexander trick shows that any such space is homeomorphic to `Sⁿ`
-(`twisted_sphere_homeomorph`).  The case `n = 5` is `smooth_poincare_five`.
+the strip `W` between them is a simply connected cobordism between two spheres with
+`H_*(W, ∂₀W; ℤ) = 0` (`hcobordism_input_of_homotopy_sphere`, `simplyConnectedSpace_sphere`);
+by the h-cobordism theorem (`hcobordism_strip`) a diffeomorphism of `M` carries the first disk
+onto the complement of the second open disk, so `M` is the union of two closed disks glued
+along their boundaries (a twisted sphere); the Alexander trick shows that any such space is
+homeomorphic to `Sⁿ` (`twisted_sphere_homeomorph`).  The case `n = 5` is
+`smooth_poincare_five`.
 -/
 
 namespace PoincareHighDim
@@ -38,7 +39,7 @@ theorem poincare_smooth_ge6 {n : ℕ} (h6 : 6 ≤ n) {M : Type*} [TopologicalSpa
   obtain ⟨e₀, e₁, f, h₀, h₁, hdisj, hf, hIic, hIci, hIio, hIoi, hm, hp, hreg⟩ :=
     exists_chartDisks_and_strip (M := M) (n := m + 1) (by omega : 1 ≤ m + 1)
   -- Step 2: the h-cobordism input, expressed in terms of level sets of `f`.
-  obtain ⟨hW, hincl⟩ :=
+  obtain ⟨hW, hH⟩ :=
     hcobordism_input_of_homotopy_sphere (by omega : 3 ≤ m + 1) e h₀ h₁ hdisj
   have hS₀ := h₀.simplyConnectedSpace_image_diskSphere (by omega : 3 ≤ m + 1)
   have hS₁ := h₁.simplyConnectedSpace_image_diskSphere (by omega : 3 ≤ m + 1)
@@ -48,8 +49,8 @@ theorem poincare_smooth_ge6 {n : ℕ} (h6 : 6 ≤ n) {M : Type*} [TopologicalSpa
     ext x
     simp only [mem_compl_iff, mem_union, mem_preimage, mem_Iio, mem_Ioi, mem_Icc, not_or,
       not_lt]
-  rw [hstrip] at hW hincl
-  rw [← hm] at hS₀ hincl
+  rw [hstrip] at hW hH
+  rw [← hm] at hS₀ hH
   rw [← hp] at hS₁
   -- Step 3: the h-cobordism theorem for the strip `{-1/2 ≤ f ≤ 1/2}`.
   have hf' : ContMDiff (morseModelI (m + 1)) 𝓘(ℝ, ℝ) ∞ f :=
@@ -61,7 +62,7 @@ theorem poincare_smooth_ge6 {n : ℕ} (h6 : 6 ≤ n) {M : Type*} [TopologicalSpa
     rw [isCriticalPt_morseModelI_iff hf]
     exact hreg x hx
   obtain ⟨Φ, hΦ₁, hΦ₂⟩ := hcobordism_strip (morseModelI (m + 1)) (by omega : 6 ≤ m + 1)
-    f hf' (by norm_num : (-1/2 : ℝ) < 1/2) hcompact hreg' hW hS₀ hS₁ hincl
+    f hf' (by norm_num : (-1/2 : ℝ) < 1/2) hcompact hreg' hW hS₀ hS₁ hH
   -- Step 4: `M` is a twisted sphere: the union of the disks `Φ ∘ e₀` and `e₁`.
   let e₀' : Disk (m + 1) → M := Φ ∘ e₀
   have h₀' : IsClosedEmbedding e₀' :=
