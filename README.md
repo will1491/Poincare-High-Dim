@@ -59,27 +59,31 @@ no external Lake dependencies, so the whole development lives there:
 | `Topology/SphereSimplyConnected.lean` | `Sᵏ` is simply connected for `k ≥ 2` (not in Mathlib) | Hatcher Prop. 1.14 |
 | `ChartDisks.lean` | two disjoint chart disks and the smooth function cutting them out | Scorpan p. 30 |
 | `HomotopySphere.lean`, `Topology/GeneralPosition.lean`, `Topology/PushOff.lean` | the h-cobordism input (all proved): the complement `W` of two chart disks in a homotopy `n`-sphere (`n ≥ 3`) is simply connected (general position via Hausdorff dimension) and `H_*(W, ∂₀W; ℤ) = 0` | Hatcher 1.14, §3.3 |
-| `External.lean` | compactness of homotopy spheres (proved: `H_n` of a noncompact manifold vanishes); smoothability (Kirby–Siebenmann, external); the case `n = 5` (Kervaire–Milnor, external) | Hatcher 3.29 |
-| `Smooth.lean` | Smale's theorem for smooth homotopy spheres: `n ≥ 6` proved; `n ≥ 5` uses the external case `n = 5` | Milnor Prop. B |
+| `External.lean` | compactness, smoothability of topological homotopy spheres, and the smooth case `n = 5` — all proved | Hatcher 3.29; Newman; Connell |
+| `Smooth.lean`, `SmoothFive.lean` | smooth Poincaré for `n ≥ 5`, using the direct h-cobordism argument for `n ≥ 6` and the rounded-product argument for dimension five | Milnor Prop. B; Brown's Schoenflies theorem |
+| `AcyclicFilling.lean`, `RoundedFilling.lean`, `Morse/RoundedCollar.lean` | recognize a simply connected acyclic filling with simply connected boundary as a disk in dimension `≥ 6`; apply this to the rounded product of a punctured homotopy sphere | Smale's h-cobordism theorem |
+| `Topology/BrownSchoenflies.lean` and `Topology/Cellular*.lean` | cellular shrinking, one- and two-fiber recognition, and boundary-preserving disk parametrizations for the two sides of a specified spherical collar | Brown, *A Proof of the Generalized Schoenflies Theorem* (1960) |
+| `Topology/Engulfing/NewmanTheorem.lean` and its supporting modules | relative topological engulfing by dimension induction, joint source/obstacle general position, and finite skeletal membrane iteration | Newman, *The Engulfing Theorem for Topological Manifolds* |
+| `Topology/Engulfing/ConnellFromNewman.lean`, `Topology/TwoOpenCells.lean`, `Topology/PoincareFromNewman.lean` | engulfing produces a two-cell cover; sphere recognition gives a homeomorphism, which transports the standard smooth atlas | Connell; Brown |
 | `Homology/*.lean` | singular homology of pairs: long exact sequence, naturality, reduced `H₀`, barycentric subdivision and small simplices (Hatcher 2.21), Mayer–Vietoris (absolute and relative), excision, `H_k(Sⁿ)`, compact supports, local homology of manifolds (Hatcher 3.27(a)), injectivity and surjectivity of `H_n(M) → H_n(M, M∖x)` for closed connected manifolds via ℤ/d coefficients and a Bockstein sequence, `H_n = 0` for noncompact manifolds (Hatcher 3.29) — all proved | Hatcher §2.1–2.2, §3.3 |
 
-Exactly two `sorry`s remain (`grep -rn sorry Submission`), both named theorems in
-`External.lean` with literature citations: the smoothability of topological homotopy spheres
-(which, in this development, is equivalent to the benchmark statement itself: it needs the
-topological Poincaré conjecture of Newman/Connell or Kirby–Siebenmann smoothing theory) and the
-smooth case `n = 5` (Kervaire–Milnor, `Θ₅ = 0`, needs `π₅ˢ = 0`, framed bordism and surgery).
-Neither can be proved from Mathlib and the project as they stand.
+Both former proof gaps in `External.lean` are closed. There are no remaining proof
+placeholders or added axioms. Smoothability follows from relative topological engulfing,
+Connell's two-cell cover, Brown's sphere recognition, and transport of the standard smooth atlas.
+The smooth case `n = 5` is proved by puncturing the sphere, rounding the product of its
+complement with the real line, applying six-dimensional h-cobordism, and recognizing the
+collared halves of the resulting sphere as disks by Brown's theorem.
 
-Everything else is proved, with the standard axioms only (`#print axioms`: `propext`,
+The development uses the standard axioms only (`#print axioms`: `propext`,
 `Classical.choice`, `Quot.sound`): in particular the smooth h-cobordism theorem in dimension
-`≥ 6` (`hcobordism_strip`) and Smale's theorem for smooth homotopy spheres of dimension `n ≥ 6`
-(`poincare_smooth_ge6`), with the existence of Morse functions, self-indexing, the regular
+`≥ 6` (`hcobordism_strip`) and Smale's theorem for smooth homotopy spheres of dimension `n ≥ 5`
+(`poincare_smooth`), with the existence of Morse functions, self-indexing, the regular
 interval theorem, the elimination of the indices `0, 1, n - 1, n`, the First Cancellation
 Theorem, the middle-dimensional cancellation (handle homology, handle slides, the Whitney trick),
 the Alexander trick, the twisted-sphere theorem, the chart-disk construction, `π₁(Sᵏ) = 0`, the
 h-cobordism input, the compactness of homotopy spheres, and the derivation of the target from the
-smooth theorem.  `Submission.poincare_high_dim_topological` depends on `sorryAx` only through the
-two external theorems.
+smooth theorem. `Submission.poincare_high_dim_topological` has the same three standard
+axioms and does not depend on `sorryAx`.
 
 ## Build and check
 
@@ -90,5 +94,5 @@ lake test          # runs comparator; needs landrun, lean4export, comparator, na
 ```
 
 A submission is accepted only when comparator and the nanoda kernel verify the proof with the
-permitted axioms `propext`, `Quot.sound`, `Classical.choice` only, i.e. once every `sorry` is
-closed; `#print axioms Submission.poincare_high_dim_topological` shows the current state.
+permitted axioms `propext`, `Quot.sound`, `Classical.choice` only;
+`#print axioms Submission.poincare_high_dim_topological` shows its dependencies.

@@ -87,7 +87,8 @@ theorem poincare_smooth_ge6 {n : ℕ} (h6 : 6 ≤ n) {M : Type*} [TopologicalSpa
     rw [hsph₀, hp]
   exact twisted_sphere_homeomorph h₀' h₁.isClosedEmbedding hcover hinter hbdry
 
-/-- **Smooth Poincaré conjecture, `n ≥ 5`** (Smale; Kervaire–Milnor for `n = 5`). -/
+/-- **Smooth Poincaré conjecture, `n ≥ 5`** (Smale; the rounded-product and Brown
+Schoenflies argument handles `n = 5`). -/
 theorem poincare_smooth {n : ℕ} (h5 : 5 ≤ n) {M : Type*} [TopologicalSpace M] [T2Space M]
     [CompactSpace M] [ChartedSpace (EuclideanSpace ℝ (Fin n)) M] [IsManifold (𝓡 n) ∞ M]
     (e : M ≃ₕ sphere (0 : EuclideanSpace ℝ (Fin (n + 1))) 1) :

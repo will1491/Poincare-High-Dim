@@ -63,7 +63,7 @@ import Submission.Homology.PairVanishing
 `ContinuousMap.HomotopyEquiv.nonempty_homeomorph_sphere` of
 `Mathlib.Geometry.Manifold.PoincareConjecture` restricted to `n ≥ 5`).  It is derived from
 the smooth theorem `PoincareHighDim.poincare_smooth` (Smale's h-cobordism route, developed in
-the modules under `Submission/`) and the two external nodes
+the modules under `Submission/`) and the proved compactness and smoothability theorems
 `PoincareHighDim.compactSpace_of_homotopyEquiv_sphere` and
 `PoincareHighDim.exists_smooth_structure_of_homotopyEquiv_sphere`.
 -/
