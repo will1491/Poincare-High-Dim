@@ -1,6 +1,7 @@
 import Submission.Morse.CancelPair
 import Submission.Morse.NegDual
 import Submission.Morse.DistinctSelfIndexing
+import Submission.Morse.IndexOne
 
 /-!
 # Elimination of critical points of extremal index
@@ -122,7 +123,7 @@ theorem exists_cancel_index_zero_step (I : ModelWithCorners ℝ (Fin n → ℝ) 
     GradientLikeStrip.exists_cancel_pair_strip hf₂ haa'.le hb'b.le hreg hf₂' D' hcrit'
       (Finset.mem_insert_self p {q}) (Finset.mem_insert_of_mem (Finset.mem_singleton_self q))
       hε' hgood' hD' h2ε' hlev
-  -- assembly
+  -- conclusion
   have hIoo₂ : ∀ x, g₂ x ∈ Ioo a b ↔ g₁ x ∈ Ioo a b := fun x =>
     Set.ext_iff.1 hmod₂.preimage_Ioo x
   have hIoo₃ : ∀ x, g₃ x ∈ Ioo a b ↔ g₂ x ∈ Ioo a b := fun x =>
@@ -271,6 +272,54 @@ theorem exists_index_in_middle (I : ModelWithCorners ℝ (Fin n → ℝ) H) [I.B
     ∃ g : M → ℝ, ModifiedWithin f a b g ∧ MorseStrip I g a b ∧ IsSelfIndexing I g a b ∧
       ∀ x, g x ∈ Ioo a b → IsCriticalPt I g x →
         2 ≤ morseIndex I g x ∧ morseIndex I g x + 2 ≤ n := by
-  sorry
+  -- index `1`
+  have hV₀c : ConnectedSpace (f ⁻¹' {a}) := inferInstance
+  obtain ⟨g₁, hmod₁, hf₁, hsi₁, hidx₁, hkeep₁⟩ := exists_no_index_one I h5 hf hsi hidx hW hV₀c
+  have hW₁ : SimplyConnectedSpace (g₁ ⁻¹' Icc a b) := by
+    rw [hmod₁.preimage_Icc]; exact hW
+  have hV₁' : SimplyConnectedSpace (g₁ ⁻¹' {b}) := by
+    rw [hmod₁.preimage_singleton_right]; exact hV₁
+  have hV₁c : ConnectedSpace (g₁ ⁻¹' {b}) := inferInstance
+  -- index `n - 1`, as index `1` of `-g₁` on `[-b, -a]`
+  have hidx₁' : ∀ x, (fun x => -g₁ x) x ∈ Ioo (-b) (-a) → IsCriticalPt I (fun x => -g₁ x) x →
+      0 < morseIndex I (fun x => -g₁ x) x ∧ morseIndex I (fun x => -g₁ x) x < n := by
+    intro x hx hc
+    have hx₁ : g₁ x ∈ Ioo a b := NegDual.neg_mem_Ioo_iff.1 hx
+    have hc₁ : IsCriticalPt I g₁ x := (NegDual.isCriticalPt_neg_iff I g₁ x).1 hc
+    have hnd₁ : IsNondegenerateCriticalPt I g₁ x := hf₁.nondegenerate x hx₁ hc₁
+    have h1 := NegDual.morseIndex_neg_add hnd₁
+    have := hidx₁ x hx₁ hc₁
+    omega
+  obtain ⟨g₂', hmod₂', hf₂', hsi₂', hidx₂', hkeep₂'⟩ := exists_no_index_one I h5 hf₁.neg
+    (hsi₁.neg hf₁) hidx₁' (NegDual.simplyConnectedSpace_neg_strip_iff.2 hW₁)
+    (by rw [NegDual.preimage_neg_singleton]; exact hV₁c)
+  have hneg₂ : (fun x => -(fun x => -g₂' x) x) = g₂' := funext fun x => neg_neg _
+  have hmod₂ : ModifiedWithin g₁ a b (fun x => -g₂' x) :=
+    ModifiedWithin.of_neg (by rw [hneg₂]; exact hmod₂')
+  have hf₂ : MorseStrip I (fun x => -g₂' x) a b := MorseStrip.of_neg (by rw [hneg₂]; exact hf₂')
+  have hsi₂ : IsSelfIndexing I (fun x => -g₂' x) a b :=
+    IsSelfIndexing.of_neg hf₂ (by rw [hneg₂]; exact hsi₂')
+  refine ⟨fun x => -g₂' x, hmod₁.trans hmod₂, hf₂, hsi₂, fun x hx hc => ?_⟩
+  have hx' : g₂' x ∈ Ioo (-b) (-a) := by
+    have : -(-g₂' x) ∈ Ioo (-b) (-a) := NegDual.neg_mem_Ioo_iff.2 hx
+    rwa [neg_neg] at this
+  have hc' : IsCriticalPt I g₂' x := by
+    have := (NegDual.isCriticalPt_neg_iff I (fun x => -g₂' x) x).2 hc
+    rwa [hneg₂] at this
+  have hnd' : IsNondegenerateCriticalPt I g₂' x := hf₂'.nondegenerate x hx' hc'
+  obtain ⟨hpos₂, hlt₂, hne₂⟩ := hidx₂' x hx' hc'
+  have h2 := NegDual.morseIndex_neg_add hnd'
+  by_cases h3 : morseIndex I g₂' x = 3
+  · omega
+  · obtain ⟨hc₁', hidx'⟩ := hkeep₂' x hx' hc' h3
+    have hx₁ : g₁ x ∈ Ioo a b := by
+      have : x ∈ g₂' ⁻¹' Ioo (-b) (-a) := hx'
+      rw [hmod₂'.preimage_Ioo] at this
+      exact NegDual.neg_mem_Ioo_iff.1 this
+    have hc₁ : IsCriticalPt I g₁ x := (NegDual.isCriticalPt_neg_iff I g₁ x).1 hc₁'
+    have hnd₁ : IsNondegenerateCriticalPt I g₁ x := hf₁.nondegenerate x hx₁ hc₁
+    obtain ⟨hpos₁, hlt₁, hne₁⟩ := hidx₁ x hx₁ hc₁
+    have h1 := NegDual.morseIndex_neg_add hnd₁
+    omega
 
 end PoincareHighDim
