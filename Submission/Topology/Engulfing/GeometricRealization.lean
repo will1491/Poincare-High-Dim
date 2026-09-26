@@ -72,7 +72,7 @@ theorem vertexEvaluation_injOn_space (P : PreAbstractSimplicialComplex ι) (v : 
   let w : E → (ι → ℝ) := fun y => if h : ∃ i, v i = y then Pi.single h.choose 1 else 0
   have hw (i : ι) : w (v i) = Pi.single i 1 := by
     dsimp [w]
-    rw [dif_pos ⟨i, rfl⟩]
+    rw [dite_eq_left ⟨i, rfl⟩]
     congr 1
     exact hv (Exists.choose_spec (⟨i, rfl⟩ : ∃ j, v j = v i))
   let g := interpolateVertices K hK w
@@ -159,7 +159,7 @@ theorem geometricRealizationHomeomorph_inverse_affine
   let w : E → (ι → ℝ) := fun y => if h : ∃ i, v i = y then Pi.single h.choose 1 else 0
   have hw (i : ι) : w (v i) = Pi.single i 1 := by
     dsimp [w]
-    rw [dif_pos ⟨i, rfl⟩]
+    rw [dite_eq_left ⟨i, rfl⟩]
     congr 1
     exact hv (Exists.choose_spec (⟨i, rfl⟩ : ∃ j, v j = v i))
   have hsk : s.image v ∈ K.faces := by rw [hfaces]; exact ⟨s, hs, rfl⟩

@@ -115,7 +115,7 @@ theorem exists_uncoveredFaces_avoidance_tolerance (G H : SimplicialComplex ℝ E
     ∃ δ : ℝ, 0 < δ ∧ ∀ g : G.space → M,
       (∀ x, dist (g x) (f x) < δ) →
       Disjoint (g '' (Subtype.val ⁻¹' (uncoveredFaces G H f U).space)) X := by
-  letI : CompactSpace G.space :=
+  let : CompactSpace G.space :=
     isCompact_iff_compactSpace.mp (isCompact_space_of_finite_faces G hG)
   have hcompact : IsCompact (Subtype.val ⁻¹' (uncoveredFaces G H f U).space : Set G.space) :=
     ((isCompact_space_of_finite_faces _
@@ -135,7 +135,7 @@ theorem exists_barycentric_subdivision_separating [FiniteDimensional ℝ E]
       (∀ x : G.space, x.1 ∈ convexHull ℝ (s : Set E) → f x ∈ U) ∨
       Disjoint (f '' (Subtype.val ⁻¹' convexHull ℝ (s : Set E))) X := by
   classical
-  letI : CompactSpace G.space :=
+  let : CompactSpace G.space :=
     isCompact_iff_compactSpace.mp (isCompact_space_of_finite_faces G hG)
   let V : Bool → Set G.space := fun b => f ⁻¹' (if b then U else Xᶜ)
   have hV : ∀ b, IsOpen (V b) := by

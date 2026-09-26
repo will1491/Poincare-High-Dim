@@ -40,7 +40,7 @@ theorem centroid_injective_on_faces (K : SimplicialComplex ℝ E) :
     simp only [Finset.mem_inter, Finset.mem_singleton, Finset.notMem_empty, iff_false]
     rintro ⟨rfl, hst⟩
     exact hne hst
-  simpa [hempty, chainCentroids] using hm
+  simp [hempty, chainCentroids] at hm
 
 /-- The subcomplex of all faces of dimension at most `r`. -/
 def skeleton (K : SimplicialComplex ℝ E) (r : ℕ) : SimplicialComplex ℝ E where

@@ -80,8 +80,8 @@ theorem NewmanConnectivity.pathConnectedSpace {U : Set M} {p : ℕ}
       change z ∈ frontier A at hz
       rw [hA.frontier_eq] at hz
       exact hz.elim) continuous_const⟩
-  let a : S := ⟨EuclideanSpace.single 0 (1 : ℝ), by simp [S, mem_sphere_zero_iff_norm]⟩
-  let b : S := ⟨-EuclideanSpace.single 0 (1 : ℝ), by simp [S, mem_sphere_zero_iff_norm]⟩
+  let a : S := ⟨EuclideanSpace.single 0 (1 : ℝ), by simp [S]⟩
+  let b : S := ⟨-EuclideanSpace.single 0 (1 : ℝ), by simp [S]⟩
   have ha : f a = x := by simp [f, A, a]
   have hb : f b = y := by simp [f, A, b]
   obtain ⟨c, ⟨H⟩⟩ := h.ambient 0 (Nat.zero_le p) f

@@ -16,6 +16,7 @@ open scoped Pointwise
 variable {E : Type*} [DecidableEq E] [NormedAddCommGroup E] [NormedSpace ℝ E]
   [FiniteDimensional ℝ E]
 
+omit [FiniteDimensional ℝ E] in
 /-- A simplex thickened along a single direction lies in the affine span obtained
 by adjoining one extra vertex. -/
 theorem segment_thickening_subset_affineSpan {s : Finset E} {a : E} (ha : a ∈ s)

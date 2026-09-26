@@ -71,7 +71,7 @@ theorem exists_local_obstacle_chart_setup
     (K L : SimplicialComplex ℝ E) (hK : K.faces.Finite) (hLK : L.faces ⊆ K.faces)
     (hd : ∀ s ∈ K.faces, s.card ≤ d + 1) (hpd : p ≤ d)
     (g : C(K.space, M)) {X : Set M} (b : LocalPLChartData K L g X n p)
-    (Z : Set E) (hZ : IsCompact Z) (hZK : Z ⊆ K.space)
+    (Z : Set E) (hZ : IsCompact Z) (_hZK : Z ⊆ K.space)
     (hZcore : ∀ x : K.space, x.val ∈ Z → g x ∈ b.toBufferedChart.core)
     {ε : ℝ} (hε : 0 < ε) : Nonempty (LocalObstacleChartSetup K L g b Z d ε) := by
   let : CompactSpace K.space := isCompact_iff_compactSpace.mp (isCompact_space_of_finite_faces K hK)

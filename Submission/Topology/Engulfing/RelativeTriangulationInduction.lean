@@ -33,6 +33,7 @@ def BoundarySimplexFilling : Prop :=
         (t ∈ B.faces ∨ t = ∅) ∧
         convexHull ℝ (s : Set E) ∩ finiteSimplexBoundary V = convexHull ℝ (t : Set E)
 
+omit [FiniteDimensional ℝ E] in
 /-- A geometric refinement of a subcomplex extends to the entire finite
 complex, retaining every prescribed face literally. -/
 theorem exists_relative_refinement_of_boundary_filling

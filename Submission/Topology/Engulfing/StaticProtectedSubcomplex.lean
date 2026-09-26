@@ -19,6 +19,7 @@ variable {E F : Type*} [DecidableEq E]
   [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]
   [NormedAddCommGroup F] [NormedSpace ℝ F]
 
+omit [NormedSpace ℝ F] in
 theorem exists_static_protected_subcomplex
     (K L H D Y : SimplicialComplex ℝ E) (hK : K.faces.Finite)
     (hLK : L.faces ⊆ K.faces) (hHK : H.faces ⊆ K.faces)

@@ -56,7 +56,7 @@ theorem exists_smooth_structure_of_homotopyEquiv_sphere {n : ℕ} (h5 : 5 ≤ n)
     ∃ cs : ChartedSpace (EuclideanSpace ℝ (Fin n)) M,
       @IsManifold ℝ _ (EuclideanSpace ℝ (Fin n)) _ _ (EuclideanSpace ℝ (Fin n)) _ (𝓡 n) ∞ M _
         cs := by
-  letI : CompactSpace M := compactSpace_of_homotopyEquiv_sphere e
+  let : CompactSpace M := compactSpace_of_homotopyEquiv_sphere e
   exact exists_smooth_structure_of_uniform_relativeNewman h5 e
     (fun N _ q => Engulfing.relativeNewmanAt N n (n - 3) q)
 

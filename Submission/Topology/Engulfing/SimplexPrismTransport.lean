@@ -118,6 +118,7 @@ theorem SimplexSplit.ambientPrismCoordinates_symm_apply (s : SimplexSplit ι) (v
       (p.1 : E) + simplexPoint v (s.fiberPoint p.2.1 p.2.2) :=
   affineSubspaceProductHomeomorph_symm_apply _ _ _
 
+omit [DecidableEq ι] [FiniteDimensional ℝ E] in
 theorem simplexPoint_injective_on_hyperplane (v : ι → E) (hv : AffineIndependent ℝ v) :
     InjOn (simplexPoint v) (barycentricHyperplane ι) := by
   intro x hx y hy hxy
@@ -125,21 +126,33 @@ theorem simplexPoint_injective_on_hyperplane (v : ι → E) (hv : AffineIndepend
       (simplexBarycentricHomeomorph v hv).symm ⟨y, hy⟩ := Subtype.ext hxy
   exact congrArg Subtype.val ((simplexBarycentricHomeomorph v hv).symm.injective h)
 
+omit [Nonempty ι] [DecidableEq ι] in
+private theorem convex_standardBarycentricSimplex :
+    Convex ℝ (standardBarycentricSimplex ι) := by
+  intro x hx y hy a b ha hb hab
+  refine ⟨fun i => add_nonneg (mul_nonneg ha (hx.1 i)) (mul_nonneg hb (hy.1 i)), ?_⟩
+  simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, Finset.sum_add_distrib,
+    ← Finset.mul_sum, hx.2, hy.2, mul_one, hab]
+
 omit [Nonempty ι] [FiniteDimensional ℝ E] in
 theorem simplexPoint_image_simplex (v : ι → E) :
     simplexPoint v '' standardBarycentricSimplex ι = convexHull ℝ (range v) := by
-  have h := (Fintype.linearCombination ℝ v).image_convexHull
-    (range fun i : ι => Pi.single i (1 : ℝ))
-  rw [convexHull_rangle_single_eq_stdSimplex] at h
-  have he : (Fintype.linearCombination ℝ v) '' (range fun i : ι => Pi.single i (1 : ℝ)) =
-      range v := by
-    rw [← range_comp]
-    congr 1
-    funext i
-    simp [Fintype.linearCombination_apply]
-  rw [he] at h
-  exact h
+  apply Subset.antisymm
+  · rintro _ ⟨w, hw, rfl⟩
+    have h := Finset.univ.centerMass_mem_convexHull (fun i _ => hw.1 i)
+      (by rw [hw.2]; norm_num) (fun i _ => (mem_range_self i : v i ∈ range v))
+    rw [Finset.centerMass_eq_of_sum_1 _ _ hw.2] at h
+    exact h
+  · apply convexHull_min
+    · rintro _ ⟨i, rfl⟩
+      refine ⟨Pi.single i 1, ⟨?_, by simp⟩, ?_⟩
+      · intro j
+        simp only [Pi.single_apply]
+        split_ifs <;> norm_num
+      · simp [simplexPoint]
+    · exact convex_standardBarycentricSimplex.linear_image (Fintype.linearCombination ℝ v)
 
+omit [FiniteDimensional ℝ E] in
 theorem simplexPoint_mem_convexHull_iff (v : ι → E) (hv : AffineIndependent ℝ v)
     {w : ι → ℝ} (hw : ∑ i, w i = 1) :
     simplexPoint v w ∈ convexHull ℝ (range v) ↔ w ∈ standardBarycentricSimplex ι := by
@@ -220,7 +233,7 @@ theorem barycentricFace_eq_convexHull (J : Finset ι) :
         have hji : j ≠ i := by intro h; subst j; exact hj hi
         simp [hji]
     · intro x hx y hy a b ha hb hab
-      refine ⟨(convex_stdSimplex ℝ ι) hx.1 hy.1 ha hb hab, ?_⟩
+      refine ⟨convex_standardBarycentricSimplex hx.1 hy.1 ha hb hab, ?_⟩
       intro i hi
       simp [Pi.add_apply, Pi.smul_apply, hx.2 i hi, hy.2 i hi]
 
@@ -234,6 +247,7 @@ theorem simplexPoint_image_face (v : ι → E) (J : Finset ι) :
   funext i
   simp [Fintype.linearCombination_apply]
 
+omit [FiniteDimensional ℝ E] in
 theorem simplexPoint_mem_face_iff (v : ι → E) (hv : AffineIndependent ℝ v)
     {w : ι → ℝ} (hw : ∑ i, w i = 1) (J : Finset ι) :
     simplexPoint v w ∈ convexHull ℝ (v '' (J : Set ι)) ↔ w ∈ barycentricFace J := by
@@ -249,6 +263,7 @@ theorem simplexPoint_mem_face_iff (v : ι → E) (hv : AffineIndependent ℝ v)
 def simplexFacet (v : ι → E) (i : ι) : Set E :=
   convexHull ℝ (v '' ({i}ᶜ : Set ι))
 
+omit [FiniteDimensional ℝ E] in
 theorem simplexPoint_mem_facet_iff (v : ι → E) (hv : AffineIndependent ℝ v)
     {w : ι → ℝ} (hw : w ∈ standardBarycentricSimplex ι) (i : ι) :
     simplexPoint v w ∈ simplexFacet v i ↔ w i = 0 := by
@@ -334,7 +349,7 @@ theorem SimplexSplit.ambientPrismHomeomorph_image_simplex (s : SimplexSplit ι)
     refine ⟨e.symm p, ?_, e.apply_symm_apply p⟩
     apply (s.ambientPrismHomeomorph_simplex_iff v hv _).mpr
     simpa only [← show e = s.ambientPrismHomeomorph v hv from rfl,
-      e.apply_symm_apply, mem_setOf_eq] using hp
+      e.apply_symm_apply, mem_ofPred_eq] using hp
 
 theorem SimplexSplit.ambientPrismHomeomorph_lower_graph_iff (s : SimplexSplit ι)
     (v : ι → E) (hv : AffineIndependent ℝ v) {x : E}

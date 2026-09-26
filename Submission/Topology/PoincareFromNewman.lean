@@ -18,11 +18,11 @@ theorem nonempty_homeomorph_sphere_of_uniform_relativeNewman
     (hnewman : ∀ (N : Type u) [MetricSpace N], ∀ q : ℕ,
       Engulfing.RelativeNewmanAt N n (n - 3) q) :
     Nonempty (M ≃ₜ sphere (0 : EuclideanSpace ℝ (Fin (n + 1))) 1) := by
-  letI : TopologicalSpace.MetrizableSpace M := metrizableSpace_of_compact_charted (n := n)
-  letI : MetricSpace M := TopologicalSpace.metrizableSpaceMetric M
+  let : TopologicalSpace.MetrizableSpace M := metrizableSpace_of_compact_charted (n := n)
+  let : MetricSpace M := TopologicalSpace.metrizableSpaceMetric M
   let z : sphere (0 : EuclideanSpace ℝ (Fin (n + 1))) 1 :=
     ⟨EuclideanSpace.single 0 (1 : ℝ), by simp⟩
-  letI : Nonempty M := ⟨e.invFun z⟩
+  let : Nonempty M := ⟨e.invFun z⟩
   exact Engulfing.nonempty_homeomorph_sphere_of_relativeNewman hn e
     (fun C => hnewman ↥(Cᶜ) (n - 3 + 1))
 

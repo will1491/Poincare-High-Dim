@@ -105,7 +105,7 @@ theorem finiteSimplexBoundary_subset_skeletalStage (K R : SimplicialComplex ℝ 
     rw [← hcard]
     exact Finset.card_erase_lt_of_mem has
   · rw [Finset.not_nonempty_iff_eq_empty.mp hne] at hxa
-    simpa only [Finset.coe_empty, convexHull_empty, notMem_empty] using hxa
+    simp only [Finset.coe_empty, convexHull_empty, notMem_empty] at hxa
 
 /-- A new top face attaches along its full boundary. -/
 theorem skeletalStage_inter_simplex (K R : SimplicialComplex ℝ E)

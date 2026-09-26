@@ -19,13 +19,14 @@ noncomputable section
 variable {E : Type*} [DecidableEq E]
   [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
 
+omit [DecidableEq E] [FiniteDimensional ℝ E] in
 theorem exists_extension_from_finite_subcomplex {n : ℕ}
     (K D : SimplicialComplex ℝ E) (hD : D.faces.Finite) (hDK : D.faces ⊆ K.faces)
     (f : C(D.space, EuclideanSpace ℝ (Fin n))) :
     ∃ g : C(K.space, EuclideanSpace ℝ (Fin n)),
       ∀ x : D.space, g (subcomplexInclusion K D hDK x) = f x := by
-  letI : CompactSpace D.space := isCompact_iff_compactSpace.mp (isCompact_space_of_finite_faces D hD)
-  letI : TietzeExtension (EuclideanSpace ℝ (Fin n)) :=
+  let : CompactSpace D.space := isCompact_iff_compactSpace.mp (isCompact_space_of_finite_faces D hD)
+  let : TietzeExtension (EuclideanSpace ℝ (Fin n)) :=
     TietzeExtension.of_homeo (PiLp.homeomorph 2 (fun _ : Fin n => ℝ))
   have hi : Function.Injective (subcomplexInclusion K D hDK) := by
     intro x y h

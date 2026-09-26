@@ -135,6 +135,7 @@ noncomputable def split : SimplexSplit V where
     obtain ⟨i, hi⟩ := h.nonempty
     exact ⟨⟨i, h.subset hi⟩, by simpa using hi⟩
 
+omit [NormedAddCommGroup E] [InnerProductSpace ℝ E] in
 @[simp] theorem mem_split_right (i : V) : i ∈ h.split.right ↔ i.val ∈ B := by
   simp [split, SimplexSplit.right]
 
@@ -144,7 +145,7 @@ theorem simplexFacet_subtype (i : V) :
   congr 1
   ext x
   simp only [mem_image, mem_compl_iff, mem_singleton_iff, Finset.mem_coe, Finset.mem_erase,
-    Subtype.exists, Subtype.mk.injEq]
+    Subtype.exists]
   constructor
   · rintro ⟨y, hy, hne, rfl⟩
     exact ⟨fun he => hne (Subtype.ext he), hy⟩

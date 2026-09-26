@@ -39,7 +39,7 @@ theorem exists_polyhedral_target_away_from_closed_core
   obtain ⟨P, J, D, hP, hPspace, hPref, hPdim, _, _, _, _, hD, hDP, hDW, _, hinterior⟩ :=
     exists_subcomplex_neighborhood_preserving K ⊥ hK (empty_subset _)
       hA inter_subset_left (hC.isOpen_compl.preimage hj) hAW hdim
-  letI : CompactSpace P.space :=
+  let : CompactSpace P.space :=
     isCompact_iff_compactSpace.mp (isCompact_space_of_finite_faces P hP)
   let Z : Set P.space := (interior (Subtype.val ⁻¹' D.space))ᶜ
   let B : Set M := (fun x : P.space => j x.1) '' Z
@@ -118,7 +118,7 @@ theorem exists_protected_chart_polyhedron_engulfing
   obtain ⟨D, B, hD, hDdim, _, _, havoid, hB, hBU, hBK, hcover⟩ :=
     exists_polyhedral_target_away_from_closed_core K hK hdim hj.continuous hC hU hCU
   let O : TopologicalSpace.Opens M := ⟨Cᶜ, hC.isOpen_compl⟩
-  letI : ChartedSpace (EuclideanSpace ℝ (Fin n)) (Cᶜ : Set M) :=
+  let : ChartedSpace (EuclideanSpace ℝ (Fin n)) (Cᶜ : Set M) :=
     inferInstanceAs (ChartedSpace (EuclideanSpace ℝ (Fin n)) O)
   have hO : Nonempty O := hconn.nonempty.to_subtype.map Subtype.val
   let f : C(D.space, (Cᶜ : Set M)) :=

@@ -78,7 +78,7 @@ theorem exists_finiteLocalPLData (K L : SimplicialComplex ℝ E)
     (hlocal : ∀ x : K.space, ∃ b : LocalPLChartData K L g X n p,
       g x ∈ b.toBufferedChart.core) : Nonempty (FiniteLocalPLData K L g X n p) := by
   classical
-  letI : CompactSpace K.space :=
+  let : CompactSpace K.space :=
     isCompact_iff_compactSpace.mp (isCompact_space_of_finite_faces K hK)
   choose b hb using hlocal
   have hcover : (univ : Set K.space) ⊆ ⋃ x, g ⁻¹' (b x).toBufferedChart.core :=

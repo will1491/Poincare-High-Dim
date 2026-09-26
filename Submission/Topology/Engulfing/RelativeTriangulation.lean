@@ -53,8 +53,8 @@ theorem not_mem_face {s : Finset E} (hs : s ∈ B.faces) : c ∉ s :=
   fun hc => h.not_mem_space (B.subset_space hs hc)
 
 private theorem radial_unique {x y : E} (hx : x ∈ B.space) (hy : y ∈ B.space)
-    {a b a' b' : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b) (hab : a + b = 1)
-    (ha' : 0 ≤ a') (hb' : 0 ≤ b') (hab' : a' + b' = 1)
+    {a b a' b' : ℝ} (_ha : 0 ≤ a) (hb : 0 ≤ b) (hab : a + b = 1)
+    (_ha' : 0 ≤ a') (hb' : 0 ≤ b') (hab' : a' + b' = 1)
     (he : a • c + b • x = a' • c + b' • y) :
     a = a' ∧ b = b' ∧ (b = 0 ∨ x = y) := by
   obtain ⟨s, hs, hxs⟩ := SimplicialComplex.mem_space_iff.mp hx
@@ -202,7 +202,7 @@ theorem old_faces_subset : B.faces ⊆ h.complex.faces := fun _ hs => Or.inl (Or
 theorem finite_faces (hB : B.faces.Finite) : h.complex.faces.Finite := by
   have hi : {s | ∃ t ∈ B.faces, s = insert c t} = (fun t => insert c t) '' B.faces := by
     ext s
-    simp only [mem_setOf_eq, mem_image]
+    simp only [mem_ofPred_eq, mem_image]
     constructor <;> rintro ⟨t, ht, he⟩ <;> exact ⟨t, ht, he.symm⟩
   change (B.faces ∪ {s | s = {c}} ∪ {s | ∃ t ∈ B.faces, s = insert c t}).Finite
   rw [hi]

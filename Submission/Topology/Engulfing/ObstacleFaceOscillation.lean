@@ -20,6 +20,7 @@ variable {E : Type*} [DecidableEq E]
   {T : SimplicialComplex ℝ (EuclideanSpace ℝ (Fin n))}
   {f : C(K.space, EuclideanSpace ℝ (Fin n))}
 
+omit [FiniteDimensional ℝ E] in
 theorem ObstacleGeneralPositionData.raw_image_oscillation
     (a : ObstacleGeneralPositionData K L T f d p ε)
     {s : Finset (EuclideanSpace ℝ (Fin a.augmentation.ambientDimension))}
@@ -34,6 +35,7 @@ theorem ObstacleGeneralPositionData.raw_image_oscillation
   rw [dist_eq_norm]
   exact a.raw_oscillation s hs u v hu hv
 
+omit [FiniteDimensional ℝ E] in
 theorem ObstaclePullbackModel.raw_oscillation
     {a : ObstacleGeneralPositionData K L T f d p ε} (m : ObstaclePullbackModel a)
     {s : Finset E} (hs : s ∈ m.source.faces) (x y : K.space)
@@ -44,6 +46,7 @@ theorem ObstaclePullbackModel.raw_oscillation
   exact a.raw_image_oscillation (a.augmentation.sourceImage_faces ht)
     (himage.subset ⟨x, hx, rfl⟩) (himage.subset ⟨y, hy, rfl⟩)
 
+omit [FiniteDimensional ℝ E] in
 /-- Choosing whole source faces meeting an inner ball retains them in an outer
 ball whenever the radius gap exceeds the approximation oscillation budget. -/
 theorem ObstaclePullbackModel.raw_face_subset_ball_of_meets

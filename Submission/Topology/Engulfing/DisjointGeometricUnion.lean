@@ -260,14 +260,14 @@ def geometricDisjointUnionHomeomorph (K : SimplicialComplex ℝ E) (T : Simplici
 theorem geometricDisjointUnion_inl_isClosedEmbedding (K : SimplicialComplex ℝ E)
     (T : SimplicialComplex ℝ F) (hK : K.faces.Finite) :
     IsClosedEmbedding (geometricDisjointUnion_inl K T) := by
-  letI : CompactSpace K.space := isCompact_iff_compactSpace.mp (isCompact_space_of_finite_faces K hK)
+  let : CompactSpace K.space := isCompact_iff_compactSpace.mp (isCompact_space_of_finite_faces K hK)
   exact (geometricDisjointUnion_inl K T).continuous.isClosedEmbedding
     (geometricDisjointUnion_inl_injective K T)
 
 theorem geometricDisjointUnion_inr_isClosedEmbedding (K : SimplicialComplex ℝ E)
     (T : SimplicialComplex ℝ F) (hT : T.faces.Finite) :
     IsClosedEmbedding (geometricDisjointUnion_inr K T) := by
-  letI : CompactSpace T.space := isCompact_iff_compactSpace.mp (isCompact_space_of_finite_faces T hT)
+  let : CompactSpace T.space := isCompact_iff_compactSpace.mp (isCompact_space_of_finite_faces T hT)
   exact (geometricDisjointUnion_inr K T).continuous.isClosedEmbedding
     (geometricDisjointUnion_inr_injective K T)
 

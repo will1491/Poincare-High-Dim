@@ -17,6 +17,7 @@ variable {E M F : Type*}
   [TopologicalSpace M] [T2Space M]
   [NormedAddCommGroup F] [NormedSpace ℝ F] [FiniteDimensional ℝ F]
 
+omit [FiniteDimensional ℝ E] in
 theorem exists_chart_source_neighborhood
     (K : SimplicialComplex ℝ E) (hK : K.faces.Finite) (f : C(K.space, M))
     (e : OpenPartialHomeomorph M F) (c : F) {r R : ℝ}

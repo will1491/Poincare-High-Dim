@@ -35,6 +35,7 @@ structure FiniteGPFaceModel {n : ℕ} (K : SimplicialComplex ℝ E)
       (((face s).val : Set (EuclideanSpace ℝ (Fin jointDimension))) ∩ (face t).val)) ⊆
         raw '' (convexHull ℝ (s.val : Set E) ∩ convexHull ℝ (t.val : Set E))
 
+omit [DecidableEq E] [FiniteDimensional ℝ E] in
 /-- Produce the actual exceptional columns for a current protected target.
 Its map may have changed off the local raw model, provided any intersection
 with the active simplex is still represented by that model. -/

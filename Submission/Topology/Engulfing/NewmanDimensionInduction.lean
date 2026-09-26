@@ -72,7 +72,7 @@ theorem newmanConclusion_of_separated_faces
     Disjoint (g '' (Subtype.val ⁻¹' Q.space)) P.obstacle
   have hGood₀ : Good g₀ := ⟨hfix₀,
     hδavoid g₀ (fun x => (hnear₀ x).trans_le (min_le_right _ _))⟩
-  letI : CompactSpace P.source.space :=
+  let : CompactSpace P.source.space :=
     isCompact_iff_compactSpace.mp (isCompact_space_of_finite_faces _ P.source_finite)
   have hQcompact : IsCompact (Subtype.val ⁻¹' Q.space : Set P.source.space) :=
     ((isCompact_space_of_finite_faces Q

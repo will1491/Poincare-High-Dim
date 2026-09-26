@@ -30,7 +30,7 @@ theorem exists_enclosing_core_with_connectivity (hpn : p + 3 ≤ n)
       chartAt := oldCharts.chartAt
       mem_chart_source := oldCharts.mem_chart_source
       chart_mem_atlas := fun _ => mem_univ _ }
-  letI : ChartedSpace (EuclideanSpace ℝ (Fin n)) M := allCharts
+  let : ChartedSpace (EuclideanSpace ℝ (Fin n)) M := allCharts
   have hpre : IsCompact (j ⁻¹' B) := hj.isEmbedding.isInducing.isCompact_preimage' hB hBU
   obtain ⟨R, hR, hnorm⟩ := hpre.isBounded.exists_pos_norm_le
   let r : ℝ := 2 * R
@@ -77,7 +77,7 @@ theorem exists_enclosing_core_with_connectivity (hpn : p + 3 ≤ n)
       rw [hvnorm] at hw
       norm_num at hw
     exact ⟨⟨e v, hvC⟩, heU (mem_range_self v)⟩
-  letI : ContractibleSpace (range j) := hj.isEmbedding.toHomeomorph.symm.contractibleSpace
+  let : ContractibleSpace (range j) := hj.isEmbedding.toHomeomorph.symm.contractibleSpace
   let a : (Subtype.val ⁻¹' range j : Set (Cᶜ : Set M)) ≃ₜ (range j \ C : Set M) :=
     { toEquiv :=
         { toFun := fun x => ⟨x.1.1, x.2, x.1.2⟩

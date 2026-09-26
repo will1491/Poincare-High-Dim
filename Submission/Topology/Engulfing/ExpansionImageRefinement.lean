@@ -19,6 +19,7 @@ variable {E F : Type*} [DecidableEq E] [DecidableEq F]
   [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
   [NormedAddCommGroup F] [InnerProductSpace ℝ F] [FiniteDimensional ℝ F]
 
+omit [FiniteDimensional ℝ F] in
 theorem exists_image_refinement_preserving_expansions
     (K : SimplicialComplex ℝ E) (Q : SimplicialComplex ℝ F)
     (hK : K.faces.Finite) (hQ : Q.faces.Finite)

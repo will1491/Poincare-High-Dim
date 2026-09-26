@@ -21,6 +21,7 @@ variable {Z M E F : Type*} [MetricSpace Z] [MetricSpace M]
     [FiniteDimensional ℝ F]
     {ι : Type*} [Fintype ι] [DecidableEq ι] [Nonempty ι]
 
+omit [DecidableEq F] in
 /-- The analytic and geometric assembly of the single-chart simplex step.
 The sole engulfing input is the lower-dimensional conclusion on the quotient;
 the remaining hypotheses record its fixed set and the exceptional columns.

@@ -36,7 +36,7 @@ theorem exists_local_obstacle_preparation
     (hPL : ∀ s ∈ L.faces, ∃ F : E →ᵃ[ℝ] EuclideanSpace ℝ (Fin n),
       ∀ x : K.space, x.val ∈ convexHull ℝ (s : Set E) → x.val ∈ U → e (g x) = F x.val)
     (hinj : InjOn (fun x : K.space => e (g x)) (Subtype.val ⁻¹' (L.space ∩ U))) :
-    ∃ (P J D : SimplicialComplex ℝ E) (hP : P.faces.Finite) (hspace : P.space = K.space),
+    ∃ (P J D : SimplicialComplex ℝ E) (_hP : P.faces.Finite) (hspace : P.space = K.space),
       let κ : P.space ≃ₜ K.space := Homeomorph.setCongr hspace
       SimplicialRefines P K ∧ (∀ s ∈ P.faces, s.card ≤ d + 1) ∧
       J.faces.Finite ∧ J.faces ⊆ P.faces ∧ J.space = L.space ∧ SimplicialRefines J L ∧

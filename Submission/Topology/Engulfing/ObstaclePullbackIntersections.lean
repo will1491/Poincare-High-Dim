@@ -9,7 +9,7 @@ open Set Geometry Topology
 noncomputable section
 
 variable {E : Type*} [DecidableEq E]
-  [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+  [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   {n d p : ℕ} {ε : ℝ} {K L : SimplicialComplex ℝ E}
   {T : SimplicialComplex ℝ (EuclideanSpace ℝ (Fin n))}
   {f : C(K.space, EuclideanSpace ℝ (Fin n))}

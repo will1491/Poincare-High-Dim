@@ -30,6 +30,7 @@ def ObstacleAugmentationData.PreservesSourceExpansions
       ((fun x : K.space => (a.sourceMap x).val) '' (Subtype.val ⁻¹' A))
       ((fun x : K.space => (a.sourceMap x).val) '' (Subtype.val ⁻¹' C))
 
+omit [FiniteDimensional ℝ E] in
 theorem ObstacleAugmentationData.PreservesSourceExpansions.refine
     {a : ObstacleAugmentationData K L T f d p} (h : a.PreservesSourceExpansions)
     (P : SimplicialComplex ℝ (EuclideanSpace ℝ (Fin a.ambientDimension)))

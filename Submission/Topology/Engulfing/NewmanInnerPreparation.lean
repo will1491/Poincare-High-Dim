@@ -74,7 +74,7 @@ theorem exists_newmanInnerModel_of_static_data
       a.chart.chart (F x) ∈ closedBall a.chart.center a.chart.outerRadius →
         x.val ∈ D.space ∧ a.chart.chart (F x) = raw x.val) :
     Nonempty (NewmanInnerModel K L H F X raw Y.space p) := by
-  letI : CompactSpace K.space :=
+  let : CompactSpace K.space :=
     isCompact_iff_compactSpace.mp (isCompact_space_of_finite_faces K hK)
   have h₀Cut : r₀ < rCut := (h₀B.trans hBU).trans hUC
   have h₀R : r₀ < a.chart.outerRadius := h₀Cut.trans (hCA.trans hAR)

@@ -38,6 +38,7 @@ variable {n d p : ℕ} {K L : SimplicialComplex ℝ E}
   {T : SimplicialComplex ℝ (EuclideanSpace ℝ (Fin n))}
   {f : C(K.space, EuclideanSpace ℝ (Fin n))}
 
+omit [DecidableEq E] [FiniteDimensional ℝ E] in
 theorem ObstacleAugmentationData.shared_face_disjoint
     (a : ObstacleAugmentationData K L T f d p)
     (w : EuclideanSpace ℝ (Fin a.ambientDimension) → EuclideanSpace ℝ (Fin n))
@@ -76,6 +77,7 @@ theorem ObstacleAugmentationData.shared_face_disjoint
       _ = H z := congrArg H hyz
   exact havoid x (by rw [hxy]; exact hys) hxL (hvalue.symm ▸ hzX)
 
+omit [DecidableEq E] [FiniteDimensional ℝ E] in
 theorem ObstacleAugmentationData.shared_face_inter_subset
     (a : ObstacleAugmentationData K L T f d p)
     (w : EuclideanSpace ℝ (Fin a.ambientDimension) → EuclideanSpace ℝ (Fin n))

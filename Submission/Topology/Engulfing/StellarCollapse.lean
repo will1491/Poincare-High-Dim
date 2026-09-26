@@ -135,7 +135,7 @@ theorem firstSimplex_inter_facet_other {V : Finset E} (hV : V ∈ K.faces)
     simp [firstSimplex]
     aesop
   rw [he]
-  simpa only [if_neg (not_or_intro hia hib)] using d.firstSimplex_inter_facet hV ha hb i
+  simpa only [ite_eq_right (not_or_intro hia hib)] using d.firstSimplex_inter_facet hV ha hb i
 
 /-- Choose the roof endpoint first when precisely one endpoint indexes the old roof. -/
 theorem firstSimplex_inter_roof {V B : Finset E} (hV : V ∈ K.faces)
@@ -182,7 +182,7 @@ theorem secondSimplex_inter_firstSimplex {V : Finset E} (hV : V ∈ K.faces)
   rw [h]
   congr 1
   ext x
-  simp [firstSimplex, secondSimplex]
+  simp [firstSimplex]
   have hp := d.point_ne_right
   aesop
 
@@ -242,8 +242,8 @@ theorem secondSimplex_inter_roof_union_first {V B : Finset E} (hV : V ∈ K.face
   d.reverse.firstSimplex_inter_roof_union_second hV hb ha hBV
 
 /-- The first new roof is nonempty and proper in the permitted order. -/
-theorem proper_firstRoof {V B : Finset E} (hV : V ∈ K.faces)
-    (ha : d.a ∈ V) (hb : d.b ∈ V) (hB : ProperSimplexRoof V B)
+theorem proper_firstRoof {V B : Finset E} (_hV : V ∈ K.faces)
+    (_ha : d.a ∈ V) (hb : d.b ∈ V) (hB : ProperSimplexRoof V B)
     (horder : d.b ∈ B → d.a ∈ B) :
     ProperSimplexRoof (d.firstSimplex V) (d.firstRoof B) := by
   refine ⟨?_, ?_, ?_⟩
@@ -265,7 +265,7 @@ theorem proper_firstRoof {V B : Finset E} (hV : V ∈ K.faces)
 /-- The shared facet is nonempty as a roof index set, and an unselected old vertex
 or the new vertex witnesses that the second roof is proper. -/
 theorem proper_secondRoof {V B : Finset E} (hV : V ∈ K.faces)
-    (ha : d.a ∈ V) (hb : d.b ∈ V) (hB : ProperSimplexRoof V B)
+    (ha : d.a ∈ V) (_hb : d.b ∈ V) (hB : ProperSimplexRoof V B)
     (horder : d.b ∈ B → d.a ∈ B) :
     ProperSimplexRoof (d.secondSimplex V) (d.secondRoof B) := by
   refine ⟨?_, Finset.insert_nonempty _ _, ?_⟩

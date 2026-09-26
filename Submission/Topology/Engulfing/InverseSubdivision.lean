@@ -24,6 +24,7 @@ def HasAffineInverseFaceParents (K : SimplicialComplex ℝ E) (Q : SimplicialCom
     ∀ x : Q.space, x.val ∈ convexHull ℝ (s : Set F) →
       (e.symm x).val = A x.val ∧ A x.val ∈ convexHull ℝ (t : Set E)
 
+omit [DecidableEq F] in
 /-- Pull back any refinement of the image. The face correspondence is exact,
 so a joint general-position map on the image restricts to its source. -/
 theorem exists_inverse_geometric_subdivision

@@ -26,7 +26,7 @@ theorem exists_common_refinement_preserving_expansions
       (∀ s ∈ R.faces, s.card ≤ d + 1) ∧
       ∀ A C, FiniteSimplexExpansionIn K A C → FiniteSimplexExpansionIn R A C := by
   classical
-  letI : Fintype P.faces := hP.fintype
+  let : Fintype P.faces := hP.fintype
   choose F hF using fun s : P.faces =>
     exists_affine_inequalities_of_affineIndependent s.val (P.indep s.property)
   let I := Finset.univ.biUnion F

@@ -110,7 +110,7 @@ theorem exists_localPLChartData_off_fixed_obstacle [T2Space M]
     (f : C(K.space, M)) {X : Set M} (hX : IsClosed X)
     {y : M} (hy : y ∉ X ∪ f '' (Subtype.val ⁻¹' L.space)) :
     ∃ b : LocalPLChartData K L f X n p, y ∈ b.toBufferedChart.core := by
-  letI : CompactSpace K.space :=
+  let : CompactSpace K.space :=
     isCompact_iff_compactSpace.mp (isCompact_space_of_finite_faces K hK)
   have hsource : IsCompact (Subtype.val ⁻¹' L.space : Set K.space) :=
     ((isCompact_space_of_finite_faces L hL).isClosed.preimage continuous_subtype_val).isCompact
@@ -173,7 +173,7 @@ theorem HasLocalPLData.of_union [T2Space M]
     (hnew : f '' (Subtype.val ⁻¹' D.space) ⊆ bNew.toBufferedChart.core) :
     HasLocalPLData K J f X n p := by
   classical
-  letI : CompactSpace K.space :=
+  let : CompactSpace K.space :=
     isCompact_iff_compactSpace.mp (isCompact_space_of_finite_faces K hK)
   have hcompact : IsCompact (f '' (Subtype.val ⁻¹' D.space)) :=
     (((isCompact_space_of_finite_faces D hD).isClosed.preimage

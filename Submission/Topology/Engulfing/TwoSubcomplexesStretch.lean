@@ -89,6 +89,7 @@ theorem exists_stretch_cover_in_chart {M : Type*} [TopologicalSpace M] [T2Space 
       exact Or.inl ⟨j y, hy, (hH y).trans (congrArg j heq)⟩
     · exact Or.inr hright
 
+omit [DecidableEq E] [FiniteDimensional ℝ E] in
 /-- A face-preserving homeomorphism retains a protected set whenever every moved
 point of that set lies in a face already contained in the chosen neighborhood. -/
 theorem subset_image_of_face_preserving {M : Type*} [TopologicalSpace M]

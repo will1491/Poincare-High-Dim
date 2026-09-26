@@ -26,6 +26,7 @@ def ObstacleGeneralPositionData.rawMap (a : ObstacleGeneralPositionData K L T f 
   ⟨fun x => a.correction.symm (a.approximation x),
     a.correction.symm.continuous.comp a.approximation.continuous⟩
 
+omit [FiniteDimensional ℝ E] in
 theorem ObstacleGeneralPositionData.rawMap_source
     (a : ObstacleGeneralPositionData K L T f d p ε) (x : K.space) :
     a.rawMap x = interpolateVertices a.augmentation.joint a.augmentation.joint_finite
@@ -153,14 +154,16 @@ namespace ObstaclePullbackModel
 
 variable {a : ObstacleGeneralPositionData K L T f d p ε} (m : ObstaclePullbackModel a)
 
- theorem inverse_source (x : K.space) : m.inverse (a.augmentation.sourceMap x).val = x.val := by
+omit [FiniteDimensional ℝ E] in
+theorem inverse_source (x : K.space) : m.inverse (a.augmentation.sourceMap x).val = x.val := by
   have h := m.inverse_exact (a.augmentation.sourceHomeomorph x)
-  simpa only [a.augmentation.sourceHomeomorph.symm_apply_apply,
-    ObstacleAugmentationData.sourceHomeomorph_apply] using h
+  rw [a.augmentation.sourceHomeomorph.symm_apply_apply] at h
+  exact h
 
+omit [FiniteDimensional ℝ E] in
 /-- A vertex shared by the source and obstacle copies comes from the original
 fixed subcomplex, even when the unapproximated moving source meets the obstacle. -/
- theorem inverse_mem_fixed_of_obstacle {y : EuclideanSpace ℝ (Fin a.augmentation.ambientDimension)}
+theorem inverse_mem_fixed_of_obstacle {y : EuclideanSpace ℝ (Fin a.augmentation.ambientDimension)}
     (hy : y ∈ a.augmentation.sourceImage.space) (hyT : y ∈ a.augmentation.obstacleImage.space) :
     m.inverse y ∈ L.space := by
   let y' : a.augmentation.sourceImage.space := ⟨y, hy⟩
@@ -170,7 +173,8 @@ fixed subcomplex, even when the unapproximated moving source meets the obstacle.
   rw [m.inverse_exact y']
   exact a.augmentation.intersection_fixed x (hx.symm ▸ hyT)
 
- theorem shared_face_vertex_mem_fixed
+omit [FiniteDimensional ℝ E] in
+theorem shared_face_vertex_mem_fixed
     {s t : Finset (EuclideanSpace ℝ (Fin a.augmentation.ambientDimension))}
     (hs : s ∈ a.augmentation.sourceImage.faces) (ht : t ∈ a.augmentation.obstacleImage.faces)
     {y : EuclideanSpace ℝ (Fin a.augmentation.ambientDimension)} (hys : y ∈ s) (hyt : y ∈ t) :
@@ -178,7 +182,8 @@ fixed subcomplex, even when the unapproximated moving source meets the obstacle.
   m.inverse_mem_fixed_of_obstacle (a.augmentation.sourceImage.subset_space hs hys)
     (a.augmentation.obstacleImage.subset_space ht hyt)
 
- theorem rawMap_injOn_face {s : Finset E} (hs : s ∈ m.source.faces) :
+omit [FiniteDimensional ℝ E] in
+theorem rawMap_injOn_face {s : Finset E} (hs : s ∈ m.source.faces) :
     InjOn a.rawMap {x : K.space | x.val ∈ convexHull ℝ (s : Set E)} := by
   obtain ⟨A, hA, hinj⟩ := m.affine s hs
   intro x hx y hy he

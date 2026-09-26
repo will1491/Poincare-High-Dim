@@ -18,10 +18,12 @@ noncomputable section
 variable {E : Type*} [DecidableEq E] [NormedAddCommGroup E]
   [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
 
+omit [FiniteDimensional ℝ E] in
 theorem boundarySimplexFilling : BoundarySimplexFilling (E := E) := by
   intro B V hB hVne hV hparents hBs
   exact exists_cone_triangulation_of_boundary B hB V hVne hV hparents hBs
 
+omit [FiniteDimensional ℝ E] in
 /-- Extend a prescribed geometric subdivision without subdividing any of its
 faces further. -/
 theorem exists_relative_triangulation
@@ -35,6 +37,7 @@ theorem exists_relative_triangulation
   exists_relative_refinement_of_boundary_filling boundarySimplexFilling
     K D J hK hDK hJ hJD hJs hd
 
+omit [FiniteDimensional ℝ E] in
 /-- A literal subcomplex with the prescribed realization is exactly the
 restriction of the extension to that realization's original triangulation. -/
 theorem complexRestriction_eq_of_prescribed_refinement

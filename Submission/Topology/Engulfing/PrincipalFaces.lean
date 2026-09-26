@@ -84,7 +84,7 @@ theorem erasePrincipalSimplex_inter_simplex (K : SimplicialComplex ℝ E) (s : F
     have hne : (s.erase a).Nonempty := by
       by_contra hn
       rw [Finset.not_nonempty_iff_eq_empty.mp hn] at hxa
-      simpa only [Finset.coe_empty, convexHull_empty, notMem_empty] using hxa
+      simp only [Finset.coe_empty, convexHull_empty, notMem_empty] at hxa
     have hface : s.erase a ∈ K.faces := K.down_closed hs.1 (Finset.erase_subset _ _) hne
     have hproper : s.erase a ≠ s := by
       intro he

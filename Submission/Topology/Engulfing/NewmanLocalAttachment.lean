@@ -37,8 +37,7 @@ variable {M n p q}
 theorem singleSimplexNewmanAt_of_localAttachment
     (hlocal : LocalSkeletalAttachmentAt M n p q) : SingleSimplexNewmanAt M n p q := by
   apply singleSimplexNewmanAt_of_assigned_chart_steps
-  intro E _ _ _ _ _ P s D havoid R
-  intro C V B hC hCpoly hBase _ hCp hV hVq ha hRegion g H hg hcover ε hε
+  intro E _ _ _ _ _ P s D havoid R C V B hC hCpoly hBase _ hCp hV hVq ha hRegion g H hg hcover ε hε
   by_cases hVC : convexHull ℝ (V : Set (ConeSpace E)) ⊆ C
   · refine ⟨g, Homeomorph.refl M, fun _ _ => rfl,
       fun _ => by simpa only [dist_self] using hε, ?_, by simp⟩

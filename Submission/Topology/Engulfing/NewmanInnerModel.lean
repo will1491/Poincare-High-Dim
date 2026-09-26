@@ -99,9 +99,11 @@ def Good (g : C(K.space, M)) : Prop :=
   EqOn g F (Subtype.val ⁻¹' (L.space ∪ d.localComplex.space)) ∧
     ∀ x, dist (g x) (F x) < d.tolerance
 
+omit [DecidableEq E] [FiniteDimensional ℝ E] in
 theorem good_initial : d.Good F :=
   ⟨fun _ _ => rfl, fun _ => by simpa only [dist_self] using d.tolerance_pos⟩
 
+omit [DecidableEq E] [FiniteDimensional ℝ E] in
 /-- A strict uniform error bound on a compact source leaves a positive margin
 for the next perturbation. -/
 theorem exists_near_margin (hK : K.faces.Finite) {g : C(K.space, M)}
