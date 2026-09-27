@@ -1,8 +1,8 @@
-import Submission.ChartDisks
-import Submission.Topology.SphereSimplyConnected
-import Submission.Topology.PushOff
-import Submission.Homology.PairVanishing
-import Submission.Homology.DiskComplement
+import Submission.Manifold.ChartDisks
+import Submission.Topology.Spheres.SphereSimplyConnected
+import Submission.Topology.Connectivity.PushOff
+import Submission.Homology.Relative.PairVanishing
+import Submission.Homology.Punctures.DiskComplement
 import Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected
 import Mathlib.Topology.Homotopy.Contractible
 import Mathlib.Analysis.Normed.Module.Connected
@@ -13,13 +13,13 @@ import Mathlib.Analysis.Normed.Module.Connected
 * `nonempty_of_homotopyEquiv`, `pathConnectedSpace_of_homotopyEquiv`: elementary transport of
   nonemptiness and path-connectedness along a homotopy equivalence.
 * `simplyConnectedSpace_sphere`: `Sᵏ` is simply connected for `k ≥ 2` (not in Mathlib; proved in
-  `Submission.Topology.SphereSimplyConnected` by pushing a loop off a point and using that
+  `Submission.Topology.Spheres.SphereSimplyConnected` by pushing a loop off a point and using that
   `Sᵏ` minus a point is contractible via stereographic projection).
 * `simplyConnectedSpace_compl_chartDisks`: if `M` is a simply connected Hausdorff space with an
   `ℝⁿ`-atlas, `n ≥ 3`, then the complement `W` of two disjoint open chart disks is simply
   connected.  This is the general-position argument: `W` is path connected
   (`isPathConnected_compl_chartDisks`), and a null-homotopy in `M` of a loop in `W` can be
-  pushed off the two open disks (`exists_push_off_two` of `Submission.Topology.PushOff`: blend,
+  pushed off the two open disks (`exists_push_off_two` of `Submission.Topology.Connectivity.PushOff`: blend,
   inside each chart ball, with a Sard-generic differentiable approximation so as to miss the
   centre, then retract radially onto the boundary sphere), giving a null-homotopy inside `W`
   (`exists_homotopy_refl_compl_chartDisks`); the conclusion follows from
@@ -29,7 +29,7 @@ import Mathlib.Analysis.Normed.Module.Connected
   one by symmetry, but only the first is consumed).  This follows from excision, the long exact
   sequence of a pair, homotopy invariance, and the fundamental class of the closed manifold `M`
   (Hatcher Theorem 3.26 / Proposition 3.29); it is proved in
-  `Submission.Homology.DiskComplement` from the singular homology of pairs, excision, the long
+  `Submission.Homology.Punctures.DiskComplement` from the singular homology of pairs, excision, the long
   exact sequence and the fundamental class developed in `Submission.Homology`.
 * `hcobordism_input_of_homotopy_sphere`: the two statements above combined; this is the
   algebraic-topological input to the h-cobordism theorem (Milnor, *Lectures*, proof of
@@ -160,7 +160,7 @@ theorem simplyConnectedSpace_compl_chartDisks {n : ℕ} (hn : 3 ≤ n) {M : Type
 `n`-sphere `M`, `n ≥ 3`, and the complement `W` of two disjoint open chart disks,
 `H_*(W, ∂₀W; ℤ) = 0` for the first boundary sphere `∂₀W ⊆ W` (as the subset
 `Subtype.val ⁻¹' (e₀ '' diskSphere n)` of the subtype `W`).  This is
-`SingularPair.relHomologyVanishes_compl_chartDisks` of `Submission.Homology.DiskComplement`:
+`SingularPair.relHomologyVanishes_compl_chartDisks` of `Submission.Homology.Punctures.DiskComplement`:
 excision, the long exact sequence of a pair, homotopy invariance and the fundamental class of
 the closed manifold `M` (Hatcher Theorem 3.26 / Proposition 3.29); no Whitehead theorem is
 needed.  See the module docstring. -/

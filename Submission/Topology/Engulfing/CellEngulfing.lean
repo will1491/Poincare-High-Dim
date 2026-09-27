@@ -1,5 +1,5 @@
 import Submission.Topology.Engulfing.ProtectedPolyhedron
-import Submission.Topology.PuncturedCellConnectivity
+import Submission.Topology.Connectivity.PuncturedCellConnectivity
 
 /-!
 # Engulfing in an open cell while retaining a compact core

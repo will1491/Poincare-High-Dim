@@ -1,6 +1,6 @@
-import Submission.Topology.Engulfing.SubcomplexNeighborhood
-import Submission.Topology.Engulfing.NewmanProblem
-import Submission.Topology.OpenHomeomorphExtension
+import Submission.Topology.Engulfing.Simplicial.Subcomplex.SubcomplexNeighborhood
+import Submission.Topology.Engulfing.Newman.Induction.NewmanProblem
+import Submission.Topology.Disks.OpenHomeomorphExtension
 import Mathlib.Geometry.Manifold.HasGroupoid
 
 /-!

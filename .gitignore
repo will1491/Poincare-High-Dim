@@ -14,8 +14,10 @@
 !/lakefile.toml
 !/lake-manifest.json
 !/lean-toolchain
-!/README.md
-!/PROBLEM.md
+!/docs/
+
+# Local reference material is not part of the submission.
+/docs/references/
 
 # build artifacts and OS files anywhere
 .lake/

@@ -1,6 +1,6 @@
-import Submission.Topology.Engulfing.TwoSubcomplexesStretch
-import Submission.Topology.Engulfing.DualSkeleton
-import Submission.Topology.FiniteCellCover
+import Submission.Topology.Engulfing.Simplicial.Weights.TwoSubcomplexesStretch
+import Submission.Topology.Engulfing.Simplicial.Weights.DualSkeleton
+import Submission.Topology.Recognition.FiniteCellCover
 import Mathlib.Topology.MetricSpace.Thickening
 
 /-!

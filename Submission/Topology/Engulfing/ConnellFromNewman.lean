@@ -1,7 +1,7 @@
 import Submission.Topology.Engulfing.CellEngulfing
 import Submission.Topology.Engulfing.ConnellCover
-import Submission.Topology.Engulfing.EnclosingSimplex
-import Submission.Topology.TwoOpenCells
+import Submission.Topology.Engulfing.Polyhedral.Geometry.EnclosingSimplex
+import Submission.Topology.Recognition.TwoOpenCells
 
 /-!
 # Connell's two-cell cover from relative engulfing

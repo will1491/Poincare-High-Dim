@@ -1,10 +1,10 @@
 import Mathlib.Geometry.Manifold.Instances.Sphere
 import Mathlib.Topology.Homotopy.Equiv
-import Submission.Homology.Noncompact
-import Submission.Homology.CompactZero
+import Submission.Homology.Local.Noncompact
+import Submission.Homology.Spheres.CompactZero
 import Submission.SmoothFive
 import Submission.Topology.Engulfing.NewmanTheorem
-import Submission.Topology.PoincareFromNewman
+import Submission.Topology.Recognition.PoincareFromNewman
 
 /-!
 # Former external theorems
@@ -14,10 +14,10 @@ here from the developments imported below.
 
 * `compactSpace_of_homotopyEquiv_sphere`: a topological `n`-manifold homotopy equivalent to `Sⁿ`
   is compact.  **Now proved** (no longer external): for `n = 0` the manifold is discrete and
-  `M` injects into `S⁰` (`Submission.Homology.CompactZero`); for `n ≥ 1`,
+  `M` injects into `S⁰` (`Submission.Homology.Spheres.CompactZero`); for `n ≥ 1`,
   `H_n(M; ℤ) ≅ H_n(Sⁿ; ℤ) ≅ ℤ ≠ 0` by homotopy invariance and the sphere computation, while a
   connected noncompact `n`-manifold has `H_n = 0` (Hatcher, Proposition 3.29, formalised in
-  `Submission.Homology.Noncompact`).  Needed only because the target statement does not assume
+  `Submission.Homology.Local.Noncompact`).  Needed only because the target statement does not assume
   compactness.
 * `exists_smooth_structure_of_homotopyEquiv_sphere`: **now proved** by Newman's relative
   topological engulfing theorem, Connell's two-cell cover, and Brown's sphere recognition.

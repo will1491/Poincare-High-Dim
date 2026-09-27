@@ -1,7 +1,7 @@
 import Submission.HCobordism
-import Submission.ModelTransport
+import Submission.Manifold.ModelTransport
 import Submission.HomotopySphere
-import Submission.Topology.TwistedSphere
+import Submission.Topology.Disks.TwistedSphere
 import Submission.External
 
 /-!

@@ -1,7 +1,7 @@
 import Submission.Morse.Existence
-import Submission.Morse.SelfIndexing
-import Submission.Morse.LowHandles
-import Submission.Morse.MiddleHandles
+import Submission.Morse.Rearrangement.SelfIndexing
+import Submission.Morse.Handles.LowHandles
+import Submission.Morse.Handles.MiddleHandles
 
 /-!
 # The h-cobordism theorem (strip form)

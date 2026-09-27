@@ -1,8 +1,8 @@
-import Submission.Topology.Engulfing.NewmanPreparedAttachment
-import Submission.Topology.Engulfing.LocalObstacleInnerGeometry
-import Submission.Topology.Engulfing.LocalObstacleInnerModel
-import Submission.Topology.Engulfing.NewmanLocalAttachment
-import Submission.Topology.Engulfing.NewmanDimensionInduction
+import Submission.Topology.Engulfing.Newman.Step.NewmanPreparedAttachment
+import Submission.Topology.Engulfing.Local.Obstacle.LocalObstacleInnerGeometry
+import Submission.Topology.Engulfing.Local.Obstacle.LocalObstacleInnerModel
+import Submission.Topology.Engulfing.Newman.Membrane.NewmanLocalAttachment
+import Submission.Topology.Engulfing.Newman.Induction.NewmanDimensionInduction
 
 /-!
 # Relative topological engulfing

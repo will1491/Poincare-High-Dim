@@ -1,12 +1,12 @@
 import Submission.Morse.Defs
-import Submission.Morse.ExistenceProof
+import Submission.Morse.Foundations.ExistenceProof
 
 /-!
 # Existence of Morse functions on a strip
 
 Milnor, *Lectures on the h-cobordism theorem*, Theorem 2.5 (with Lemmas 2.6, A, B, 2.7) in strip
 form: a smooth function with two regular values `a < b` and compact strip can be perturbed inside
-the open strip into a Morse function.  The proof (in `Submission.Morse.ExistenceProof`)
+the open strip into a Morse function.  The proof (in `Submission.Morse.Foundations.ExistenceProof`)
 adds small linear functions chart by chart (Sard's theorem in the equidimensional case, available
 in Mathlib as `addHaar_image_eq_zero_of_det_fderivWithin_eq_zero`) and uses the stability of
 nondegeneracy under `C²`-small perturbations.

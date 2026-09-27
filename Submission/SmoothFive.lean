@@ -1,9 +1,9 @@
-import Submission.SmoothFivePreparation
-import Submission.RoundedFilling
-import Submission.Morse.RoundedCollar
-import Submission.Topology.RoundedSimplyConnected
-import Submission.Topology.RoundedDisk
-import Submission.Topology.BrownSchoenflies
+import Submission.Filling.SmoothFivePreparation
+import Submission.Filling.RoundedFilling
+import Submission.Morse.Rounded.RoundedCollar
+import Submission.Topology.Rounded.RoundedSimplyConnected
+import Submission.Topology.Rounded.RoundedDisk
+import Submission.Topology.Schoenflies.BrownSchoenflies
 
 /-!
 # Smooth Poincaré via a rounded product
