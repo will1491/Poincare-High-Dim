@@ -1,3 +1,9 @@
+/-
+Copyright (c) 2026 Will (Ziang) Li. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Will (Ziang) Li
+-/
+
 import Mathlib.Geometry.Manifold.Instances.Sphere
 import Mathlib.Topology.Homotopy.Equiv
 import Submission.Homology.Local.Noncompact

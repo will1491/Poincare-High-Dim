@@ -1,4 +1,11 @@
 /-
+Copyright 2026 The DifferentialGeometry contributors.
+Modifications copyright (c) 2026 Will (Ziang) Li. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: The DifferentialGeometry contributors; Will (Ziang) Li (local modifications)
+-/
+
+/-
 Vendored from https://github.com/qinz1yang/differential-geometry
 (commit 4fbccdfc73f986ce59d7bb66e8bb078f8007ffe2, Apache License 2.0; see Submission/DifferentialGeometry/LICENSE),
 with the statements generalised from analytic to smooth atlases and from `Type` to `Type*`

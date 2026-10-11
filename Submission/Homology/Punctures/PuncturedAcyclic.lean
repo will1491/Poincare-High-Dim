@@ -1,3 +1,9 @@
+/-
+Copyright (c) 2026 Will (Ziang) Li. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Will (Ziang) Li
+-/
+
 import Submission.Homology.Relative.DeltaIso
 import Submission.Homology.Local.ChartTransport
 import Submission.Homology.Local.Injectivity
