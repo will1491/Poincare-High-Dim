@@ -26,7 +26,7 @@ variable {n : ℕ} {W M F H : Type*} [TopologicalSpace W]
     [IsManifold (𝓡∂ (n + 1)) ∞ W]
     [NormedAddCommGroup F] [NormedSpace ℝ F]
     [TopologicalSpace H] [TopologicalSpace M] [ChartedSpace H M]
-    {J : ModelWithCorners ℝ F H} [IsManifold J ∞ M] [J.Boundaryless]
+    {J : ModelWithCorners ℝ F H} [J.Boundaryless]
     {f : W → M} (b : (𝓡∂ (n + 1)).boundary W)
 
 /-- The actual ambient outward normal ray misses the whole embedded manifold for small

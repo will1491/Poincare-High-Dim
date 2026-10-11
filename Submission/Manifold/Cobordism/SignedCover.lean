@@ -23,7 +23,7 @@ open scoped Manifold ContDiff
 
 variable {E H M : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     [TopologicalSpace H] [TopologicalSpace M] [ChartedSpace H M]
-    (I : ModelWithCorners ℝ E H) [IsManifold I ∞ M]
+    (I : ModelWithCorners ℝ E H)
 
 /-- A smooth signed coordinate for one boundary component, together with its inward
 coordinate curves. These data are local; no collar or global defining function is assumed. -/
@@ -223,7 +223,8 @@ theorem exists_signedCover_of_local_boundary [T2Space M] {S B₀ B₁ : Set M}
 
 /-- Local signed boundary coordinates suffice for a globally smooth regular strip function
 on an open neighborhood of the compact embedded domain. -/
-theorem exists_regular_strip_function_of_local_boundary [T2Space M]
+theorem exists_regular_strip_function_of_local_boundary [IsManifold I ∞ M]
+    [T2Space M]
     [FiniteDimensional ℝ E] [SigmaCompactSpace M] {S B₀ B₁ : Set M}
     (hS : IsCompact S) (hB₀ : IsCompact B₀) (hB₁ : IsCompact B₁)
     (hB₀S : B₀ ⊆ S) (hB₁S : B₁ ⊆ S) (hdisj : Disjoint B₀ B₁)

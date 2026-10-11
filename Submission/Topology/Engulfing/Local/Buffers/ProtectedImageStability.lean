@@ -39,6 +39,7 @@ theorem exists_protected_image_tolerance
   exact image_inter_eq_of_eqOn_and_avoid hfix havoid
     (hcontrol g (fun x hx => hnear x hx.1)).2
 
+omit [TopologicalSpace Z] [PseudoMetricSpace M] in
 theorem image_inter_subset_of_protected_stability
     {f g : Z → M} {A : Set Z} {S R : Set M}
     (hstable : (g '' A) ∩ S = (f '' A) ∩ S)

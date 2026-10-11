@@ -26,7 +26,7 @@ open scoped Manifold ContDiff
 
 variable {E H M : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     [TopologicalSpace H] [TopologicalSpace M] [ChartedSpace H M]
-    (I : ModelWithCorners ℝ E H) [IsManifold I ∞ M]
+    (I : ModelWithCorners ℝ E H)
     {S B₀ B₁ : Set M}
 
 /-- Finite local signed descriptions of a domain and its two boundary components.
@@ -52,7 +52,7 @@ namespace SignedCover
 variable {I} (C : SignedCover I S B₀ B₁)
 
 /-- A subordinate smooth partition exists on the compact domain. -/
-theorem exists_partition [FiniteDimensional ℝ E] [T2Space M] [SigmaCompactSpace M]
+theorem exists_partition [IsManifold I ∞ M] [FiniteDimensional ℝ E] [T2Space M] [SigmaCompactSpace M]
     (hS : IsClosed S) :
     ∃ ρ : SmoothPartitionOfUnity (Fin C.size) I M S, ρ.IsSubordinate C.domain :=
   SmoothPartitionOfUnity.exists_isSubordinate I hS C.domain C.open_domain C.covers
@@ -72,11 +72,9 @@ noncomputable def function (x : M) : ℝ := C.numerator ρ x / C.weight ρ x
 /-- The neighborhood on which the normalization is well defined. -/
 def neighborhood : Set M := {x | 0 < C.weight ρ x}
 
-omit [IsManifold I ∞ M] in
 theorem smooth_weight : ContMDiff I 𝓘(ℝ, ℝ) ∞ (C.weight ρ) :=
   ContMDiff.sum fun i _ => (ρ i).contMDiff
 
-omit [IsManifold I ∞ M] in
 theorem weight_eq_one {x : M} (hx : x ∈ S) : C.weight ρ x = 1 := by
   simpa only [weight, finsum_eq_sum_of_fintype] using ρ.sum_eq_one hx
 
@@ -91,7 +89,6 @@ theorem subset_neighborhood : S ⊆ C.neighborhood ρ := by
 
 include hρ
 
-omit [IsManifold I ∞ M] in
 theorem smooth_summand (i : Fin C.size) :
     ContMDiff I 𝓘(ℝ, ℝ) ∞ (fun x => ρ i x * C.value i x) := by
   have h := ρ.contMDiff_smul (g := C.value i) (n := ⊤)
@@ -105,7 +102,6 @@ theorem smooth_function : ContMDiffOn I 𝓘(ℝ, ℝ) ∞ (C.function ρ) (C.ne
   (C.smooth_numerator ρ hρ).contMDiffOn.div₀ (C.smooth_weight ρ).contMDiffOn
     (fun _ hx => ne_of_gt hx)
 
-omit [IsManifold I ∞ M] in
 theorem active_source {i : Fin C.size} {x : M} (hi : ρ i x ≠ 0) : x ∈ C.domain i :=
   hρ i (subset_tsupport _ hi)
 
@@ -232,7 +228,7 @@ omit hρ in
 include C in
 /-- The patched function realizes the domain as a closed strip in an open neighborhood,
 with exactly the prescribed endpoint level sets. -/
-theorem exists_strip_function [FiniteDimensional ℝ E] [T2Space M] [SigmaCompactSpace M]
+theorem exists_strip_function [IsManifold I ∞ M] [FiniteDimensional ℝ E] [T2Space M] [SigmaCompactSpace M]
     (hS : IsClosed S) :
     ∃ (O : Set M) (f : M → ℝ), IsOpen O ∧ S ⊆ O ∧
       ContMDiffOn I 𝓘(ℝ, ℝ) ∞ f O ∧
@@ -256,7 +252,7 @@ def HasLowerCurves : Prop :=
 set_option backward.isDefEq.respectTransparency false in
 /-- Normalization preserves regularity at the lower boundary. Compatibility of different
 normal derivatives follows from their nonnegativity along the same inward half-curve. -/
-theorem regular_lower (hcurves : C.HasLowerCurves) {x : M} (hx : x ∈ B₀) :
+theorem regular_lower [IsManifold I ∞ M] (hcurves : C.HasLowerCurves) {x : M} (hx : x ∈ B₀) :
     mfderiv I 𝓘(ℝ, ℝ) (C.function ρ) x ≠ 0 := by
   classical
   have hxS := C.lower_subset hx
@@ -371,7 +367,7 @@ noncomputable def reverse : SignedCover I S B₁ B₀ where
       · have := hc.mp hi; linarith
       · linarith
 
-omit hρ [IsManifold I ∞ M] in
+omit hρ in
 theorem reverse_function {x : M} (hx : x ∈ C.neighborhood ρ) :
     C.reverse.function ρ x = 1 - C.function ρ x := by
   have hn : C.reverse.numerator ρ x = C.weight ρ x - C.numerator ρ x := by
@@ -382,7 +378,7 @@ theorem reverse_function {x : M} (hx : x ∈ C.neighborhood ρ) :
   rfl
 
 /-- Upper-end regularity is lower-end regularity for the reflected local functions. -/
-theorem regular_upper (hcurves : C.reverse.HasLowerCurves) {x : M} (hx : x ∈ B₁) :
+theorem regular_upper [IsManifold I ∞ M] (hcurves : C.reverse.HasLowerCurves) {x : M} (hx : x ∈ B₁) :
     mfderiv I 𝓘(ℝ, ℝ) (C.function ρ) x ≠ 0 := by
   have hne := C.reverse.regular_lower ρ hρ hcurves hx
   have hxO := C.subset_neighborhood ρ (C.upper_subset hx)
@@ -407,7 +403,7 @@ omit hρ in
 include C in
 /-- Genuine local signed charts, with their inward curves, produce a global regular strip
 function on an open neighborhood of the compact domain. -/
-theorem exists_regular_strip_function [FiniteDimensional ℝ E] [T2Space M]
+theorem exists_regular_strip_function [IsManifold I ∞ M] [FiniteDimensional ℝ E] [T2Space M]
     [SigmaCompactSpace M] (hS : IsClosed S)
     (hlower : C.HasLowerCurves) (hupper : C.reverse.HasLowerCurves) :
     ∃ (O : Set M) (f : M → ℝ), IsOpen O ∧ S ⊆ O ∧

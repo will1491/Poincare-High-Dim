@@ -4268,7 +4268,7 @@ theorem exists_adaptedFields {f : M → ℝ} (hf : ContMDiff I 𝓘(ℝ, ℝ) �
     · simp only [Prod.fst_add, Prod.smul_fst, smul_eq_mul, add_zero]
       exact div_mul_cancel₀ a hv₀
     · simp only [Prod.snd_add, Prod.smul_snd]
-      abel
+      abel_nf
   -- a complementary coordinate `Q` on the kernel, making `(L₀, Q)` invertible
   let K₀ : Submodule ℝ (Fin n → ℝ) :=
     LinearMap.ker (L₀ : (Fin n → ℝ) →ₗ[ℝ] ℝ × EuclideanSpace ℝ (Fin s))

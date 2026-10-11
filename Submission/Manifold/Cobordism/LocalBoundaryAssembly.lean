@@ -19,7 +19,7 @@ open scoped Manifold ContDiff
 variable {E F H M : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     [NormedAddCommGroup F] [NormedSpace ℝ F] [TopologicalSpace H]
     [TopologicalSpace M] [ChartedSpace H M]
-    {J : ModelWithCorners ℝ F H} [IsManifold J ∞ M]
+    {J : ModelWithCorners ℝ F H}
     {S B B₀ B₁ : Set M} {b : M}
 
 /-- The normal-coordinate construction for charts whose source uses the normed-space
@@ -79,7 +79,6 @@ noncomputable def of_boundary_piece (L : StripFunction.LocalBoundaryFunction J S
     exact (or_iff_left hx.2).symm
   inward x hx hxB := L.inward x hx.1 (hB ▸ Or.inl hxB)
 
-omit [IsManifold J ∞ M] in
 /-- A regular signed boundary function prevents its base boundary point from being
 an interior point of the domain. -/
 theorem mem_frontier (L : StripFunction.LocalBoundaryFunction J S B b)
