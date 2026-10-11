@@ -5,6 +5,11 @@ Authors: Will (Ziang) Li
 -/
 
 import Submission.Smooth
+import Submission.HCobordismProduct
+import Submission.HCobordismSmoothProduct
+import Submission.HCobordismMilnor
+import Submission.Manifold.Cobordism.LocalCollar
+import Submission.Homology.Relative.PairTransport
 
 /-!
 # The generalized Poincaré conjecture in dimensions `≥ 5`

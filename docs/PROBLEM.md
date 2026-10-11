@@ -1,10 +1,3 @@
-<!--
-Local modifications copyright (c) 2026 Will (Ziang) Li. All rights reserved.
-Released under Apache 2.0 license as described in the file LICENSE.
-Authors: Will (Ziang) Li (local modifications)
-Original benchmark material: lean-eval.
--->
-
 # `poincare_high_dim_topological`
 
 Generalized topological Poincaré conjecture in dimensions ≥ 5 (Smale)

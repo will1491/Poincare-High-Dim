@@ -19,9 +19,8 @@ relative singular homology of `Submission.Homology.SingularPair`), is a product 
 This is Milnor's hypothesis verbatim; the homotopy-theoretic form (the inclusion `V₀ ↪ W` is a
 homotopy equivalence) implies it by `IsHomotopyEquivInclusion.relHomologyVanishes`.
 
-The proof is a strong induction on the number of critical points in the open strip: without
-critical points the regular interval theorem (`regular_interval`) applies, and otherwise one
-critical point is cancelled by `exists_middle_cancel_step` (`Submission/Morse/Handles/Middle/MiddleStep.lean`).
+The proof retains a final smooth function with no critical points by strong induction on the
+number of critical points in the open strip. If critical points remain, one is cancelled by `exists_middle_cancel_step` (`Submission/Morse/Handles/Middle/MiddleStep.lean`).
 That step rests on the deepest parts of the theory: the handle chain complex and the fact that it
 computes `H_*(W, V₀)` (Theorem 7.4, which needs singular homology of pairs with excision), the basis
 theorem realising elementary basis changes by handle slides (Theorem 7.6), the Whitney trick
@@ -37,10 +36,11 @@ open Set
 variable {n : ℕ} {H : Type*} [TopologicalSpace H] {M : Type*} [TopologicalSpace M]
   [ChartedSpace H M]
 
-/-- **Middle-dimensional cancellation** (Milnor, Theorem 7.8, strip form): `W = f ⁻¹' [a, b]`
-of dimension `n ≥ 6`, all critical points of index in `[2, n - 2]`, `W`, `V₀ = f ⁻¹' {a}` and
-`V₁ = f ⁻¹' {b}` simply connected, and `H_*(W, V₀; ℤ) = 0`. -/
-theorem product_of_middle_indices (I : ModelWithCorners ℝ (Fin n → ℝ) H) [I.Boundaryless]
+/-- **Middle-dimensional cancellation** (Milnor, Theorem 7.8): under the homological
+h-cobordism hypotheses, a Morse function whose critical indices lie in `[2, n - 2]` can be
+modified within its open strip so that it has no critical points anywhere on the closed strip.
+The returned function retains the original strip, endpoint levels, and endpoint sublevels. -/
+theorem exists_regular_of_middle_indices (I : ModelWithCorners ℝ (Fin n → ℝ) H) [I.Boundaryless]
     [IsManifold I ∞ M] [T2Space M] [SigmaCompactSpace M] (h6 : 6 ≤ n)
     {f : M → ℝ} {a b : ℝ} (hf : MorseStrip I f a b)
     (hidx : ∀ x, f x ∈ Ioo a b → IsCriticalPt I f x →
@@ -48,7 +48,8 @@ theorem product_of_middle_indices (I : ModelWithCorners ℝ (Fin n → ℝ) H) [
     (hW : SimplyConnectedSpace (f ⁻¹' Icc a b))
     (hV₀ : SimplyConnectedSpace (f ⁻¹' {a})) (hV₁ : SimplyConnectedSpace (f ⁻¹' {b}))
     (hH : RelHomologyVanishes (f ⁻¹' Icc a b) (Subtype.val ⁻¹' (f ⁻¹' {a}))) :
-    ∃ Φ : M ≃ₘ⟮I, I⟯ M, Φ '' (f ⁻¹' Iic a) = f ⁻¹' Iic b ∧ Φ '' (f ⁻¹' {a}) = f ⁻¹' {b} := by
+    ∃ g : M → ℝ, ModifiedWithin f a b g ∧ ContMDiff I 𝓘(ℝ, ℝ) ∞ g ∧
+      ∀ x, g x ∈ Icc a b → ¬ IsCriticalPt I g x := by
   -- Strong induction on the number of critical points in the open strip.
   have key : ∀ N : ℕ, ∀ f : M → ℝ, Set.ncard {x | f x ∈ Ioo a b ∧ IsCriticalPt I f x} = N →
       MorseStrip I f a b →
@@ -57,8 +58,8 @@ theorem product_of_middle_indices (I : ModelWithCorners ℝ (Fin n → ℝ) H) [
       SimplyConnectedSpace (f ⁻¹' Icc a b) →
       SimplyConnectedSpace (f ⁻¹' {a}) → SimplyConnectedSpace (f ⁻¹' {b}) →
       RelHomologyVanishes (f ⁻¹' Icc a b) (Subtype.val ⁻¹' (f ⁻¹' {a})) →
-      ∃ Φ : M ≃ₘ⟮I, I⟯ M, Φ '' (f ⁻¹' Iic a) = f ⁻¹' Iic b ∧
-        Φ '' (f ⁻¹' {a}) = f ⁻¹' {b} := by
+      ∃ g : M → ℝ, ModifiedWithin f a b g ∧ ContMDiff I 𝓘(ℝ, ℝ) ∞ g ∧
+        ∀ x, g x ∈ Icc a b → ¬ IsCriticalPt I g x := by
     intro N
     induction N using Nat.strong_induction_on with
     | _ N ih =>
@@ -66,8 +67,8 @@ theorem product_of_middle_indices (I : ModelWithCorners ℝ (Fin n → ℝ) H) [
     have hfin : {x | f x ∈ Ioo a b ∧ IsCriticalPt I f x}.Finite :=
       hf.finite_critical.subset fun x hx => ⟨Ioo_subset_Icc_self hx.1, hx.2⟩
     by_cases hemp : {x | f x ∈ Ioo a b ∧ IsCriticalPt I f x} = ∅
-    · -- No critical point in the open strip: the regular interval theorem applies.
-      apply regular_interval I f hf.smooth hf.lt.le hf.compact
+    · -- Retain the final function, including regularity at the two boundary levels.
+      refine ⟨f, ModifiedWithin.refl f a b, hf.smooth, ?_⟩
       intro x hx hcrit
       rcases eq_or_ne (f x) a with ha | ha
       · exact hf.regular x (Or.inl ha) hcrit
@@ -113,10 +114,30 @@ theorem product_of_middle_indices (I : ModelWithCorners ℝ (Fin n → ℝ) H) [
       have hH' : RelHomologyVanishes (g ⁻¹' Icc a b) (Subtype.val ⁻¹' (g ⁻¹' {a})) := by
         rw [hmod.preimage_singleton_left, hmod.preimage_Icc]
         exact hH
-      obtain ⟨Φ, hΦ₁, hΦ₂⟩ := ih _ hlt g rfl hg hidx' hW' hV₀' hV₁' hH'
-      refine ⟨Φ, ?_, ?_⟩
-      · rwa [hmod.preimage_Iic_left, hmod.preimage_Iic_right] at hΦ₁
-      · rwa [hmod.preimage_singleton_left, hmod.preimage_singleton_right] at hΦ₂
+      obtain ⟨k, hkmod, hksmooth, hkreg⟩ := ih _ hlt g rfl hg hidx' hW' hV₀' hV₁' hH'
+      exact ⟨k, hmod.trans hkmod, hksmooth, hkreg⟩
   exact key _ f rfl hf hidx hW hV₀ hV₁ hH
+
+/-- **Middle-dimensional cancellation in ambient sublevel form**: after cancelling all
+critical points, the regular interval theorem moves the lower sublevel onto the upper one. -/
+theorem product_of_middle_indices (I : ModelWithCorners ℝ (Fin n → ℝ) H) [I.Boundaryless]
+    [IsManifold I ∞ M] [T2Space M] [SigmaCompactSpace M] (h6 : 6 ≤ n)
+    {f : M → ℝ} {a b : ℝ} (hf : MorseStrip I f a b)
+    (hidx : ∀ x, f x ∈ Ioo a b → IsCriticalPt I f x →
+      2 ≤ morseIndex I f x ∧ morseIndex I f x + 2 ≤ n)
+    (hW : SimplyConnectedSpace (f ⁻¹' Icc a b))
+    (hV₀ : SimplyConnectedSpace (f ⁻¹' {a})) (hV₁ : SimplyConnectedSpace (f ⁻¹' {b}))
+    (hH : RelHomologyVanishes (f ⁻¹' Icc a b) (Subtype.val ⁻¹' (f ⁻¹' {a}))) :
+    ∃ Φ : M ≃ₘ⟮I, I⟯ M, Φ '' (f ⁻¹' Iic a) = f ⁻¹' Iic b ∧
+      Φ '' (f ⁻¹' {a}) = f ⁻¹' {b} := by
+  obtain ⟨g, hmod, hg, hreg⟩ :=
+    exists_regular_of_middle_indices I h6 hf hidx hW hV₀ hV₁ hH
+  have hcompact : IsCompact (g ⁻¹' Icc a b) := by
+    rw [hmod.preimage_Icc]
+    exact hf.compact
+  obtain ⟨Φ, hΦ₁, hΦ₂⟩ := regular_interval I g hg hf.lt.le hcompact hreg
+  refine ⟨Φ, ?_, ?_⟩
+  · rwa [hmod.preimage_Iic_left, hmod.preimage_Iic_right] at hΦ₁
+  · rwa [hmod.preimage_singleton_left, hmod.preimage_singleton_right] at hΦ₂
 
 end PoincareHighDim
