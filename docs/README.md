@@ -23,6 +23,12 @@ Built on Mathlib, with adapted modules from
 The upstream [license](../Submission/DifferentialGeometry/LICENSE) and
 [attribution](../Submission/DifferentialGeometry/NOTICE) are retained.
 
+## Proof Guide
+
+For an outline of the proof and a guide to how the Lean formalization corresponds
+to the natural-language proof, see the
+[Poincaré proof notes](https://poincare-proof-notes.superliziang.chatgpt.site).
+
 ## Installation
 
 From the repository root, with Lean installed:
@@ -34,3 +40,12 @@ lake build
 
 For [lean-eval benchmark validation](PROBLEM.md), `lake test` additionally requires
 comparator, lean4export, landrun, and Nanoda.
+
+## AI Disclaimer
+
+Generative AI (Codex) was used in the development of this codebase. The high-level
+architecture is human-designed; AI agents assisted with formalizing individual
+proofs and writing boilerplate. All definitions and core theorem statements were
+human-verified for correctness. Since all proofs are verified by Lean's type
+checker, AI-generated and human-written code are held to the same standard of
+correctness.
